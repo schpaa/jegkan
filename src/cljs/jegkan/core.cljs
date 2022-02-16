@@ -4,19 +4,19 @@
     [kee-frame.core :as k]
     ;; passively registers the fsm
     [re-statecharts.core :as rs]
-    [jegkan.appdata :as app-data]))
-    ;[booking.spa :as spa]
+    [jegkan.appdata :as app-data]
+    [jegkan.spa :as spa]
     ;[booking.fsm-model]))
-    ;[schpaa.darkmode]
-    ;[db.core :as db]
-    ;[nrpk.core]
-    ;[nrpk.spa]))
+    [schpaa.darkmode]
+    [db.core :as db]
+    [nrpk.core]
+    [nrpk.spa]))
 
 (defn kee-start []
       (k/start! {:routes         app-data/routes,
                  :initial-db     app-data/initial-db,
-                 ;:screen         nrpk.core/screen-breakpoints
-                 ;:root-component [nrpk.spa/app-wrapper spa/route-table]
+                 :screen         app-data/screen-breakpoints
+                 :root-component [nrpk.spa/app-wrapper spa/route-table] 
                  :not-found      "/not-found",
                  :hash-routing?  false}))
 
@@ -27,6 +27,6 @@
       (rf/dispatch [:app/setup-handlers]))
 
 (defn init! []
-      (db/init! {:config app-data/booking-firebaseconfig})
+      (db/init! {:config app-data/jegkan-firebaseconfig})
       (reload!)
       (rf/dispatch [::rs/transition :main :e.restart]))

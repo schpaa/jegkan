@@ -1,0 +1,9 @@
+<component name="libraryTable">
+  <library name="Deps: markdown-clj:1.10.7">
+    <CLASSES>
+      <root url="jar://$MAVEN_REPOSITORY$/markdown-clj/markdown-clj/1.10.7/markdown-clj-1.10.7.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES />
+  </library>
+</component>

@@ -1,0 +1,9 @@
+<component name="libraryTable">
+  <library name="Deps: Local editor">
+    <CLASSES>
+      <root url="file://$PROJECT_DIR$/lib/editor/src/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES />
+  </library>
+</component>

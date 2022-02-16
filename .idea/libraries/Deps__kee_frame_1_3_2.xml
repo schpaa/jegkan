@@ -1,0 +1,9 @@
+<component name="libraryTable">
+  <library name="Deps: kee-frame:1.3.2">
+    <CLASSES>
+      <root url="jar://$MAVEN_REPOSITORY$/kee-frame/kee-frame/1.3.2/kee-frame-1.3.2.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES />
+  </library>
+</component>

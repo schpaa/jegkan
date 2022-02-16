@@ -1,0 +1,9 @@
+<component name="libraryTable">
+  <library name="Deps: fork:2.4.2">
+    <CLASSES>
+      <root url="jar://$MAVEN_REPOSITORY$/fork/fork/2.4.2/fork-2.4.2.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES />
+  </library>
+</component>

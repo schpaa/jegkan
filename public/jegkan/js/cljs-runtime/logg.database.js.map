@@ -1,0 +1,1 @@
+{"version":3,"sources":["logg/database.cljs"],"mappings":";AAEA,wBAAA,xBAAMA;AAAN,AAAA","names":["logg.database/boat-db"],"sourcesContent":["(ns logg.database)\n\n(defn boat-db []) "]}

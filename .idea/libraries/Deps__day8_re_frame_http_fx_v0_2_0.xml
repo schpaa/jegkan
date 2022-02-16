@@ -1,0 +1,9 @@
+<component name="libraryTable">
+  <library name="Deps: day8.re-frame/http-fx:v0.2.0">
+    <CLASSES>
+      <root url="jar://$MAVEN_REPOSITORY$/day8/re-frame/http-fx/v0.2.0/http-fx-v0.2.0.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES />
+  </library>
+</component>

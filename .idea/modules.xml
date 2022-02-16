@@ -2,7 +2,12 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/jeg-kan.iml" filepath="$PROJECT_DIR$/jeg-kan.iml" />
+      <module fileurl="file://$PROJECT_DIR$/lib/db/db.iml" filepath="$PROJECT_DIR$/lib/db/db.iml" />
+      <module fileurl="file://$PROJECT_DIR$/lib/editor/editor.iml" filepath="$PROJECT_DIR$/lib/editor/editor.iml" />
+      <module fileurl="file://$PROJECT_DIR$/jegkan.iml" filepath="$PROJECT_DIR$/jegkan.iml" />
+      <module fileurl="file://$PROJECT_DIR$/lib/schpaa/schpaa.iml" filepath="$PROJECT_DIR$/lib/schpaa/schpaa.iml" />
+      <module fileurl="file://$PROJECT_DIR$/lib/times/times.iml" filepath="$PROJECT_DIR$/lib/times/times.iml" />
+      <module fileurl="file://$PROJECT_DIR$/lib/whatever/whatever.iml" filepath="$PROJECT_DIR$/lib/whatever/whatever.iml" />
     </modules>
   </component>
 </project>

@@ -1,9 +1,10 @@
 ;; shadow-cljs configuration
-{:source-paths
- ["src/dev"
-  "src/cljs"
-  "src/test"]
-
+{:source-paths ["src/dev"
+                "src/cljs"
+                "src/test"]
+ :deps {:aliases [:shadow-cljs]}
+ :nrepl {:port 9000}
+ :dev-http {8030 "public/jegkan"}
  :dependencies
  []
 
@@ -11,7 +12,7 @@
  {:jegkan    {:target            :browser
                :output-dir        "public/jegkan/js"
                :asset-path        "/js"
-               :after-load        eykt.core/reload!
+               :after-load        jegkan.core/reload!
                :modules           {:main {:init-fn jegkan.core/init!}}
                :module-hash-names 4
                :release           {:output-dir       "dist/jegkan/js"

@@ -1,0 +1,9 @@
+<component name="libraryTable">
+  <library name="Deps: funcool/promesa:6.1.431">
+    <CLASSES>
+      <root url="jar://$MAVEN_REPOSITORY$/funcool/promesa/6.1.431/promesa-6.1.431.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES />
+  </library>
+</component>

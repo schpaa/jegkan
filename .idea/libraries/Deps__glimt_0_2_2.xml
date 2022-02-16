@@ -1,0 +1,9 @@
+<component name="libraryTable">
+  <library name="Deps: glimt:0.2.2">
+    <CLASSES>
+      <root url="jar://$MAVEN_REPOSITORY$/glimt/glimt/0.2.2/glimt-0.2.2.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES />
+  </library>
+</component>

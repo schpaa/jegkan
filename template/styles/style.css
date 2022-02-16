@@ -1,0 +1,211 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+
+    @font-face {
+      font-family: 'Inter var experimental';
+      font-weight: 100 900;
+      font-display: swap;
+      font-style: oblique 0deg 10deg;
+      src: url("/fonts/Inter.var.woff2?v=3.19") format("woff2");
+    }
+
+    .font-oswald {
+        font-family: 'Oswald', sans-serif;
+        font-style: normal;
+        font-weight: 100 900;
+    }
+
+    .font-inter {
+        font-family: 'Inter var experimental', sans-serif;
+        font-weight: 100 900;
+        font-feature-settings: "salt" 1, "zero" 1;
+    }
+
+    @font-face {
+      font-family: 'Lora';
+    }
+
+    .font-lora {
+        font-family: 'Lora', serif;
+    }
+
+    a {
+        @apply underline cursor-pointer;
+    }
+    .btn {
+        @apply px-4 py-2 active:shadow disabled:cursor-default cursor-pointer truncate border-2 border-transparent;
+        min-width: 6rem;
+    }
+    .btn-small {
+        @apply flex flex-center w-full  text-xs active:shadow disabled:cursor-default truncate
+        h-6
+        rounded-sm
+        cursor-pointer
+        dark:bg-gray-700
+        dark:text-gray-300;
+
+        min-width: 2rem;
+        max-width: 4rem;
+    }
+
+    .btn-menu {
+        @apply border-alt border-2 dark:bg-black;
+    }
+
+    .btn-narrow {
+        @apply px-2 h-10 active:shadow disabled:cursor-default cursor-pointer truncate
+    }
+
+
+    .btn-tab {
+        @apply
+        dark:bg-gray-800
+        active:shadow-none
+        bg-gray-200
+        text-center
+        text-xl
+        tracking-normal
+        font-medium
+        border-b-4 border-t-0 border-x-0 border-alt;
+    }
+
+    .btn-tab-inactive {
+        @apply dark:bg-gray-800
+        bg-gray-200 text-gray-500 dark:text-gray-500
+        text-xl
+        font-medium
+        tracking-normal
+        pb-1
+        border-b-2 border-t-0 border-x-0 border-gray-300 dark:border-gray-600 text-center;
+    }
+
+    .btn-tab h2 {
+        @apply dark:text-alt text-black;
+    }
+
+    .btn-tab-inactive h2 {
+        @apply text-black dark:text-gray-500;
+    }
+
+    .btn-tab- {
+        @apply bg-gray-100 disabled:text-gray-300 active:bg-gray-200 rounded-t dark:bg-gray-700 dark:text-white
+    }
+
+    .btn-tab-inactive- {
+        @apply bg-gray-300/50 text-gray-400/50 disabled:text-gray-300 active:bg-gray-200 rounded-t dark:bg-gray-800 dark:text-gray-400
+    }
+
+    .btn-tab-b {
+        /* @apply bg-gray-100 disabled:text-gray-300 active:bg-gray-200 rounded-b dark:bg-gray-700 dark:text-white */
+    }
+
+    .btn-tab-inactive-b {
+        /* @apply bg-gray-300/50 text-gray-400/50 disabled:text-gray-300 active:bg-gray-200 rounded-b dark:bg-gray-800 dark:text-gray-400 */
+    }
+
+    .btn-free {
+        @apply
+
+        bg-gray-200 text-gray-900 hover:bg-gray-300 active:bg-gray-500
+        dark:bg-gray-600 dark:text-white dark:hover:bg-gray-500 dark:active:bg-gray-400
+        active:shadow-none
+
+        disabled:bg-gray-200/50
+        disabled:text-gray-400
+        rounded;
+    }
+
+    .btn-secondary {
+        @apply
+        bg-gray-200/50 text-gray-900 hover:bg-gray-300 active:bg-gray-500
+        dark:bg-gray-600 dark:text-white dark:hover:bg-gray-500 dark:active:bg-gray-400
+        active:shadow-none
+
+        disabled:bg-gray-50
+        disabled:text-gray-200
+        rounded;
+    }
+
+    .btn-danger {
+        @apply
+        bg-rose-400 border-rose-500 text-rose-50 hover:bg-rose-500 active:bg-rose-600
+        dark:bg-rose-600 dark:text-rose-100 dark:hover:bg-rose-700 dark:hover:bg-rose-500
+
+        disabled:active:bg-transparent
+        active:text-white
+        rounded border-2
+
+        disabled:bg-gray-400/20 disabled:border-gray-500/20 disabled:bg-gray-900/10
+        disabled:dark:bg-rose-600/20 disabled:dark:bg-rose-700/20 disabled:dark:text-rose-900
+    }
+
+    .btn-cta {
+        @apply
+        bg-alt-400 border-alt-500 text-black
+        dark:bg-alt-500 dark:bg-alt-600 dark:text-white
+
+        disabled:bg-alt/20 disabled:border-alt/25 disabled:text-black/25
+
+        hover:bg-alt
+        dark:hover:bg-alt
+        hover:disabled:bg-transparent
+        active:bg-alt/50
+
+        rounded border-2;
+    }
+
+    .btn-dim {
+        @apply bg-black/50 text-white rounded-sm
+    }
+
+    label {
+        @apply  mb-px text-gray-500 dark:text-white/50 uppercase disabled:text-gray-500/50
+    }
+
+    h2 {
+        @apply text-lg font-light
+    }
+
+    .panel {
+        @apply dark:bg-gray-900
+               bg-white
+               dark:text-gray-500;
+    }
+
+    .btn-on {
+        @apply bg-black text-white;
+    }
+    .btn-off {
+        @apply bg-black/25 text-white/50;
+    }
+
+/*
+    button, input[type="text"], input[type="date"], input[type="time"], textarea {
+    @apply focus:outline-none focus:ring-2 focus:ring-offset-1 focus:ring-alt focus:ring-offset-0
+    }
+*/
+
+}
+
+@layer utilities {
+    .field-w-max {
+        max-width: 15rem;
+    }
+    .-debug {
+        @apply bg-rose-400/20;
+        outline: #f448 solid 2px;
+    }
+    .flex-center {
+        @apply items-center justify-center;
+    }
+  .hide-scrollbar::-webkit-scrollbar {
+        box-sizing: border-box;
+        width: 0 !important;
+        display: none;
+        scrollbar-width: none;
+        scrollbar-height: none;
+    }
+}

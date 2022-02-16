@@ -1,0 +1,9 @@
+<component name="libraryTable">
+  <library name="Deps: Local db">
+    <CLASSES>
+      <root url="file://$PROJECT_DIR$/lib/db/src/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES />
+  </library>
+</component>

@@ -20,7 +20,6 @@
    ["/blog" {:name :r.blog :header "Blogg" :subheader "Booking"}]
    ["/not-found" {:name :r.page-not-found :header ":r.page-not-found" :subheader ":r.page-not-found"}]])
 
-
 ;region initial-state
 
 (def start-db
@@ -38,19 +37,22 @@
 (def initial-db
   (initialize start-db schpaa.state/ls-key))
 
+(def screen-breakpoints
+  {:breakpoints [:mobile 768 :tablet 992 :small-monitor 1200 :large-monitor],
+   :debounce-ms 166})
+
 ;endregion
 
 ;region firebase
 
-(def booking-firebaseconfig
-  ;eykt-22
-  {:apiKey            "AIzaSyD2iU_6-1pre0lbYERk8jDdzMgrs-3QVlY",
-   :authDomain        "nrpk-vakt.firebaseapp.com",
-   :databaseURL       "https://nrpk-vakt.firebaseio.com",
-   :projectId         "nrpk-vakt",
-   :storageBucket     "nrpk-vakt.appspot.com",
-   :messagingSenderId "461903557643",
-   :appId             "1:461903557643:web:f51109ad017ed61a6c430e",
-   :measurementId     "G-FYD8HLS5C1"})
+(def jegkan-firebaseconfig
+  {:apiKey            "AIzaSyD2iU_6-1pre0lbYERk8jDdzMgrs-3QVlY"
+   :authDomain        "nrpk-vakt.firebaseapp.com"
+   :databaseURL       "https://nrpk-vakt.firebaseio.com"
+   :projectId         "nrpk-vakt"
+   :storageBucket     "nrpk-vakt.appspot.com"
+   :messagingSenderId "461903557643"
+   :appId             "1:461903557643:web:bda0b1d927177d466c430e"
+   :measurementId     "G-PGWW52G3KL"})
 
 ;endregion
