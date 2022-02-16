@@ -1,3 +1,5 @@
 node_modules
 .shadow-cljs
 public/jegkan/js/**
+.cpcache
+.firebase
