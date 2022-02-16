@@ -40,6 +40,7 @@
                            (shell {:continue true} "cat ./history.md")
                            (shell "say done"))}
   template     {:task (do
+                        ;(fs/c)
                         (replacer
                           {:app-name      -app-name
                            :dist          "dist"
@@ -50,11 +51,20 @@
                 :task (run '-dev {:parallel true})}
 
   css          {:task (shell (str "npx tailwindcss -i template/styles/style.css -o " -css-output))}
-  clean        {:task (fs/delete-tree -dist-dir)}
+  clean        {:task (do
+                        (fs/delete-tree -dist-dir)
+                        (fs/create-dirs (str -dist-dir "/" -app-name "/js")))}
   build        {:task (shell (str "clj -M:shadow-cljs release " -app-name))}
+  -compile     {:task
+                (do
+                  (shell (str "clj -M:shadow-cljs compile " -app-name))
+                  (sh "bash" "-c" "ls -l dist/jegkan/js"))}
   fonts        {:task (do
-                        (fs/copy-tree "template/booking/fonts" (str -dist-dir "/" -app-name "/fonts") :replace-existing)
-                        (fs/copy-tree "template/booking/img" (str -dist-dir "/" -app-name "/img") :replace-existing))}
-  deploy       {:depends [clean build template css fonts stats]
-                :task    (let [app-name (case -app-name "jegkan" "jegkan")]
-                           (shell (str "firebase deploy --only hosting:" app-name)))}}}
+                        (fs/copy-tree (str "template/" -app-name "/fonts") (str -dist-dir "/" -app-name "/fonts") :replace-existing)
+                        (fs/copy-tree (str "template/" -app-name "/img") (str -dist-dir "/" -app-name "/img") :replace-existing))}
+
+  -deploy      {:task (shell (str "firebase deploy --only hosting:" -app-name))}
+
+  deploy       {:depends [clean build template css fonts stats -deploy]}
+  compile      {:depends [clean fonts -compile template stats]}}}
+

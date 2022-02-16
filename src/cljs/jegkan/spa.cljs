@@ -1,7 +1,10 @@
 (ns jegkan.spa)
 
+(goog-define versionz "!")
+(goog-define dummy "!")    
+
 (defn front []
-  [:div "SPA FRONT"])
+  [:div.p-4.text-white (str "FRONT: " versionz " " dummy)])
   ; (let [{:keys [bg fg- fg+ hd p p- he]} (st/fbg' 0)
   ;        user-auth (rf/subscribe [::db/user-auth])]
   ;

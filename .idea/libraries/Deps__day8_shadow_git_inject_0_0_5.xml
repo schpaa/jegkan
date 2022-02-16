@@ -1,0 +1,9 @@
+<component name="libraryTable">
+  <library name="Deps: day8/shadow-git-inject:0.0.5">
+    <CLASSES>
+      <root url="jar://$MAVEN_REPOSITORY$/day8/shadow-git-inject/0.0.5/shadow-git-inject-0.0.5.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES />
+  </library>
+</component>

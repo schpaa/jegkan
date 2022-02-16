@@ -24,7 +24,7 @@
 
 (def start-db
   {:version  "3.0.23"
-   :app/name "booking"
+   :app/name "jeg-kan!"
    :tab      :cloud})
 
 (defn initialize

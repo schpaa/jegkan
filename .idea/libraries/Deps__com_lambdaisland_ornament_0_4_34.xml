@@ -1,0 +1,9 @@
+<component name="libraryTable">
+  <library name="Deps: com.lambdaisland/ornament:0.4.34">
+    <CLASSES>
+      <root url="jar://$MAVEN_REPOSITORY$/com/lambdaisland/ornament/0.4.34/ornament-0.4.34.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES />
+  </library>
+</component>
