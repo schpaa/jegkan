@@ -1,0 +1,25 @@
+;; shadow-cljs configuration
+{:source-paths
+ ["src/dev"
+  "src/cljs"
+  "src/test"]
+
+ :dependencies
+ []
+
+ :builds
+ {:jegkan    {:target            :browser
+               :output-dir        "public/jegkan/js"
+               :asset-path        "/js"
+               :after-load        eykt.core/reload!
+               :modules           {:main {:init-fn jegkan.core/init!}}
+               :module-hash-names 4
+               :release           {:output-dir       "dist/jegkan/js"
+                                   :compiler-options {:closure-defines {goog.DEBUG false}
+                                                      :infer-externs   :auto
+                                                      :optimizations   :advanced}}
+
+               :dev               {:compiler-options {:closure-defines {goog.DEBUG true}
+                                                      :infer-externs   :auto
+                                                      :optimizations   :none}}}}}
+
