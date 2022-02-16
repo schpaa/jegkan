@@ -2,6 +2,21 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="be89c0ad-2110-4096-ba65-d55c6440e833" name="Changes" comment="">
+      <change beforePath="$PROJECT_DIR$/.cpcache/1939256406.basis" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.cpcache/1939256406.cp" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.cpcache/1939256406.libs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.cpcache/1939256406.manifest" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.cpcache/1B95D4D4B9FAA404B7413716E7F0E73F.basis" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.cpcache/1B95D4D4B9FAA404B7413716E7F0E73F.cp" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.cpcache/1B95D4D4B9FAA404B7413716E7F0E73F.libs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.cpcache/1B95D4D4B9FAA404B7413716E7F0E73F.main" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.cpcache/1B95D4D4B9FAA404B7413716E7F0E73F.manifest" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.cpcache/3436752808.basis" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.cpcache/3436752808.cp" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.cpcache/3436752808.libs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.cpcache/3436752808.main" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.cpcache/3436752808.manifest" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.firebase/hosting.cHVibGlj.cache" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -137,7 +152,13 @@
       <option name="presentableId" value="LOCAL−00002" />
       <updated>1645050619509</updated>
     </task>
-    <option name="localTasksCounter" value="3" />
+    <task id="LOCAL−00003" summary="third">
+      <created>1645050667155</created>
+      <option name="number" value="LOCAL−00003" />
+      <option name="presentableId" value="LOCAL−00003" />
+      <updated>1645050667155</updated>
+    </task>
+    <option name="localTasksCounter" value="4" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
