@@ -1,1 +1,0 @@
-{"version":3,"sources":["user/database.cljs"],"mappings":";AAEA,gCAAA,hCAAMA,wEAAiBC;AAAvB,AAAA","names":["user.database/lookup-userinfo","_"],"sourcesContent":["(ns user.database)\n\n(defn lookup-userinfo [_])"]}

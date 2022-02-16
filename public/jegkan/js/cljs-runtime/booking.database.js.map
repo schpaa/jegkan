@@ -1,1 +1,0 @@
-{"version":3,"sources":["booking/database.cljs"],"mappings":";AAEA,wBAAA,xBAAMA;AAAN,AAAA;;AAEA,yBAAA,zBAAMC,0DAAOC;AAAb,AAAA","names":["booking.database/read","booking.database/write","_"],"sourcesContent":["(ns booking.database)\n\n(defn read [])\n\n(defn write [_])"]}
