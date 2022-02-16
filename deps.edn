@@ -8,6 +8,7 @@
            com.github.ingesolvoll/re-statecharts {:mvn/version "0.1.1"}
            re-pressed/re-pressed                 {:mvn/version "0.3.1"}
            fork/fork                             {:mvn/version "2.4.2"}
+           com.lambdaisland/ornament             {:mvn/version "0.4.34"}
            times/times                           {:local/root    "./lib/times"
                                                   :deps/manifest :deps}
            db/db                                 {:local/root    "./lib/db"
