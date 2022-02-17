@@ -5,16 +5,19 @@
  :deps         {:aliases [:shadow-cljs]}
  :nrepl        {:port 9000}
  :dev-http     {8030 "public/jegkan"}
+ :dependencies [[day8/shadow-git-inject "0.0.5"]]
  :builds       {:jegkan {:target            :browser
                          :build-hooks [(shadow-git-inject.core/hook)]
-                         :git-inject        {:ignore-dirty? true}
+                         :git-inject        {:ignore-dirty? false
+                                             :version-pattern "^v(.*)$"}
                          :output-dir        "public/jegkan/js"
                          :asset-path        "/js"
                          :after-load        jegkan.core/reload!
                          :modules           {:main {:init-fn jegkan.core/init!}}
                          :module-hash-names 4
                          :compiler-options  {:closure-defines {schpaa.state/ls-key "jegkan"
-                                                               jegkan.spa/version  :shadow-git-inject/version}}
+                                                               jegkan.spa/dummy "321" 
+                                                               jegkan.spa/versionz  :shadow-git-inject/version}}
 
                          :release           {:output-dir       "dist/jegkan/js"
                                              :compiler-options {:closure-defines {goog.DEBUG false}
