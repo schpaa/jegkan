@@ -6,13 +6,21 @@
     [re-statecharts.core :as rs]
     [jegkan.appdata :as app-data]
     [jegkan.spa :as spa]
+    
     ;[booking.fsm-model]))
     [schpaa.darkmode]
+    [lambdaisland.ornament :as o]
     [db.core :as db]
     [nrpk.core]
     [nrpk.spa]))
 
-(defn kee-start []
+(o/defstyled sample2 :div :text-white)
+
+(defn render [x]
+  [sample2 x])
+
+;tests           
+(defn kee-start []     
       (k/start! {:routes         app-data/routes,
                  :initial-db     app-data/initial-db,
                  :screen         app-data/screen-breakpoints
