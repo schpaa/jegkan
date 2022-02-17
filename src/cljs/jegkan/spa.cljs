@@ -1,7 +1,9 @@
 (ns jegkan.spa)
 
+(goog-define version "!")
+
 (defn front []
-  [:div.p-4.text-white "FRONT"])
+  [:div.p-4.text-white "FRONT " version])
   ; (let [{:keys [bg fg- fg+ hd p p- he]} (st/fbg' 0)
   ;        user-auth (rf/subscribe [::db/user-auth])]
   ;

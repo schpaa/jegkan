@@ -18,6 +18,7 @@
     <orderEntry type="library" name="Deps: org.clojure/data.json:0.2.6" level="project" />
     <orderEntry type="library" name="Deps: org.clojure/clojure:1.10.3" level="project" />
     <orderEntry type="library" name="Deps: com.7theta/re-frame-fx:0.2.1" level="project" />
+    <orderEntry type="library" name="Deps: day8/shadow-git-inject:0.0.5" level="project" />
     <orderEntry type="library" name="Deps: day8.re-frame/test:0.1.5" level="project" />
     <orderEntry type="library" name="Deps: commons-codec:1.10" level="project" />
     <orderEntry type="library" name="Deps: org.clojure/tools.analyzer:1.1.0" level="project" />

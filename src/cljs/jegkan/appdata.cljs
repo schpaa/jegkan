@@ -3,6 +3,8 @@
             [cljs.reader :refer [read-string]]
             [schpaa.state]))
 
+(goog-define ls-key "z")
+
 (def routes
   [["/" {:name :r.forsiden :header "NRPK Booking" :subheader "Forsiden"}]
    ["/batlist" {:name :r.boatlist :header "Oversikt over båter" :subheader "Forsiden"}]

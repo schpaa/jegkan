@@ -5,14 +5,14 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="be89c0ad-2110-4096-ba65-d55c6440e833" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/.idea/libraries/Deps__com_lambdaisland_ornament_0_4_34.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/libraries/Deps__garden_1_3_10.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/libraries/Deps__girouette_0_0_6.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/libraries/Deps__instaparse_1_4_10.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/lib/schpaa/src/schpaa/components/simple_header.cljs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/database.rules.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.firebaserc" beforeDir="false" afterPath="$PROJECT_DIR$/.firebaserc" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/jegkan.iml" beforeDir="false" afterPath="$PROJECT_DIR$/jegkan.iml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/schpaa/src/schpaa/components/screen.cljs" beforeDir="false" afterPath="$PROJECT_DIR$/lib/schpaa/src/schpaa/components/screen.cljs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/bb.edn" beforeDir="false" afterPath="$PROJECT_DIR$/bb.edn" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/deps.edn" beforeDir="false" afterPath="$PROJECT_DIR$/deps.edn" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/firebase.json" beforeDir="false" afterPath="$PROJECT_DIR$/firebase.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/schpaa/src/schpaa/state.cljs" beforeDir="false" afterPath="$PROJECT_DIR$/lib/schpaa/src/schpaa/state.cljs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/shadow-cljs.edn" beforeDir="false" afterPath="$PROJECT_DIR$/shadow-cljs.edn" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/cljs/jegkan/appdata.cljs" beforeDir="false" afterPath="$PROJECT_DIR$/src/cljs/jegkan/appdata.cljs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/cljs/jegkan/spa.cljs" beforeDir="false" afterPath="$PROJECT_DIR$/src/cljs/jegkan/spa.cljs" afterDir="false" />
     </list>
@@ -107,6 +107,12 @@
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
     <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
     <property name="cursive.last.file.extension./Users/chris/projects/2022/jegkan/lib/schpaa/src" value="cljs" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
+  </component>
+  <component name="RecentsManager">
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$" />
+    </key>
   </component>
   <component name="RunManager">
     <configuration default="true" type="Babashka" factoryName="BabashkaLocalRepl" activateToolWindowBeforeRun="false">
@@ -185,7 +191,13 @@
       <option name="presentableId" value="LOCAL−00005" />
       <updated>1645050836317</updated>
     </task>
-    <option name="localTasksCounter" value="6" />
+    <task id="LOCAL−00006" summary="initial">
+      <created>1645051462404</created>
+      <option name="number" value="LOCAL−00006" />
+      <option name="presentableId" value="LOCAL−00006" />
+      <updated>1645051462404</updated>
+    </task>
+    <option name="localTasksCounter" value="7" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -204,6 +216,7 @@
     <option name="CHECK_NEW_TODO" value="false" />
     <MESSAGE value="third" />
     <MESSAGE value="add ornament" />
-    <option name="LAST_COMMIT_MESSAGE" value="add ornament" />
+    <MESSAGE value="initial" />
+    <option name="LAST_COMMIT_MESSAGE" value="initial" />
   </component>
 </project>

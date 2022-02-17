@@ -53,8 +53,10 @@
   clean        {:task (fs/delete-tree -dist-dir)}
   build        {:task (shell (str "clj -M:shadow-cljs release " -app-name))}
   fonts        {:task (do
-                        (fs/copy-tree "template/booking/fonts" (str -dist-dir "/" -app-name "/fonts") :replace-existing)
-                        (fs/copy-tree "template/booking/img" (str -dist-dir "/" -app-name "/img") :replace-existing))}
-  deploy       {:depends [clean build template css fonts stats]
-                :task    (let [app-name (case -app-name "jegkan" "jegkan")]
-                           (shell (str "firebase deploy --only hosting:" app-name)))}}}
+                        (fs/copy-tree (str "template/" -app-name "/fonts") (str -dist-dir "/" -app-name "/fonts") :replace-existing)
+                        (fs/copy-tree (str "template/" -app-name "/img") (str -dist-dir "/" -app-name "/img") :replace-existing))}
+
+  -deploy      {:task (shell (str "firebase deploy --only hosting:" -app-name))}
+
+  deploy       {:depends [clean build template css fonts stats -deploy]}}}
+
