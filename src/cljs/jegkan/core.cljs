@@ -6,7 +6,6 @@
     [re-statecharts.core :as rs]
     [jegkan.appdata :as app-data]
     [jegkan.spa :as spa]
-    
     ;[booking.fsm-model]))
     [schpaa.darkmode]
     [lambdaisland.ornament :as o]
@@ -14,10 +13,6 @@
     [nrpk.core]
     [nrpk.spa]))
 
-(o/defstyled sample2 :div :text-white)
-
-(defn render [x]
-  [sample2 x])
 
 ;tests           
 (defn kee-start []     

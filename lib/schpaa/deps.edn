@@ -4,7 +4,9 @@
          markdown-clj/markdown-clj {:mvn/version "1.10.7"}
          times/times               {:local/root    "../../lib/times"
                                     :deps/manifest :deps}
-         com.lambdaisland/ornament             {:mvn/version "0.4.34"}
+         styles/styles               {:local/root    "../../lib/styles"
+                                      :deps/manifest :deps}
+         com.lambdaisland/ornament {:mvn/version "0.4.34"}
          reagent/reagent           {:mvn/version "1.1.0"}
          re-frame/re-frame         {:mvn/version "1.2.0"}
          tick/tick                 {:mvn/version "0.5.0-RC5"}}}

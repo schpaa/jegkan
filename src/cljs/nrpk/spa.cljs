@@ -50,6 +50,9 @@
         :menu-direction        @(schpaa.state/listen :app/menu-direction) #_@(rf/subscribe [:app/menu-direction])}
        web-content]]]))
 
+#_(defn dispatch-main [content]
+    [:div content])
+
 (defn app-wrapper [route-table]
   (let [route-name (rf/subscribe [:route-name])
         route-entry (rf/subscribe [:kee-frame/route])

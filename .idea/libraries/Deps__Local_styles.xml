@@ -1,0 +1,9 @@
+<component name="libraryTable">
+  <library name="Deps: Local styles">
+    <CLASSES>
+      <root url="file://$PROJECT_DIR$/lib/styles/src/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES />
+  </library>
+</component>

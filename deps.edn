@@ -12,6 +12,8 @@
            com.lambdaisland/ornament             {:mvn/version "0.4.34"}
            day8/shadow-git-inject                {:mvn/version "0.0.5"}
 
+           styles/styles                         {:local/root    "./lib/styles"
+                                                  :deps/manifest :deps}
            times/times                           {:local/root    "./lib/times"
                                                   :deps/manifest :deps}
            db/db                                 {:local/root    "./lib/db"
