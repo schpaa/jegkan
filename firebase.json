@@ -12,6 +12,7 @@
   "hosting": [
     {
       "site":"jegkan",
+      "host": "0.0.0.0",
       "public": "dist/jegkan",
       "ignore": [
         "firebase.json",

@@ -64,6 +64,7 @@
             :class    :item} (t/day-of-month a)]))
 
 ;(def active-item "-MwGxRMAnFYGhmbO6rf8")
+
 (def active-user "GASRi0")
 
 (o/defstyled day :div
@@ -86,17 +87,18 @@
     [:&:hover :bg-bleu-500 {:transition-duration "200ms"}]]]
 
   ([m]
-   (let [active-item (rf/subscribe [:some/get-active-item-key])
+   (let [a @(rf/subscribe [:some/get-active-item-key])
+         active-item (if (keyword? a) (name a) a)
          {:keys [freq a]} m
          preferred? (pos? freq)
-         c (db/on-value-reaction {:path ["root" @active-item (str (t/date a))]})
+         c (db/on-value-reaction {:path ["root" active-item (str (t/date a))]})
          weekend? (some #{(t/int (t/day-of-week a))} #{6 7})]
      [:div.container
       {:class    [:item
                   (if weekend? :weekend)
                   (if preferred? :preferred)]
 
-       :on-click #(let [path ["root" @active-item (str (t/date a))]
+       :on-click #(let [path ["root" active-item (str (t/date a))]
                         [k v] (get @c active-user)]
                     (if (get @c (keyword active-user))
                       (db/database-update {:path  path
@@ -138,10 +140,10 @@
   [:.all :bg-bleu-100 :space-y-px]
   [:.listitem :bg-bleu-400 :text-white
    [:&:hover :bg-white :text-black]]
-  [:.grid  :p-2  {:display               "grid"
-                  :grid-template-columns "1fr min-content"
-                  :align-items :center
-                  :grid-auto-rows "2rem"}]
+  [:.grid :p-2 {:display               "grid"
+                :grid-template-columns "1fr min-content"
+                :align-items           :center
+                :grid-auto-rows        "2rem"}]
   ([data]
    [:div.all (for [[date freq] data]
                [:div.listitem.grid
@@ -149,16 +151,27 @@
                 [:div freq]])]))
 
 (defn front []
-  (let [active-item (rf/subscribe [:some/get-active-item-key])
-        data (get @(db/on-value-reaction {:path ["root"]}) (keyword @active-item))
+  (let [a @(rf/subscribe [:some/get-active-item-key])
+        active-item (if (keyword? a) (name a) a)
+        data (get @(db/on-value-reaction {:path ["root"]}) (keyword active-item))
         result (into {} (take 5 (sort-by second > (reduce (fn [a [k v]] (assoc a (name k) (count v))) {} data))))]
     [:div
+     ;[l/ppre-x "  " active-item data @(db/on-value-reaction {:path ["root"]})]
+     #_[l/mon
+        active-item
+        data
+        result]
      [calendar
       {:result result
        :from   (t/now)
        :to     (t/>> (t/now) (t/new-period 60 :days))}]
      [date-list (sort-by second > (sort-by first < result))]
      [sc/centered-button #(db/database-push {:path ["root"] :value {:item "ugh"}}) false :circle-plus]]))
+
+(defn topic [r]
+  [:div
+   (l/ppre-x r)
+   [:div "TOPIC"]])
 
 ; (let [{:keys [bg fg- fg+ hd p p- he]} (st/fbg' 0)
 ;        user-auth (rf/subscribe [::db/user-auth])]
@@ -193,7 +206,8 @@
 ;      [welcome])))
 
 (def route-table
-  {:r.forsiden       front
+  {:r.topic topic
+   :r.forsiden       front
    :r.new-booking    front
    :r.booking-blog   front
    ;:r.debug2         front
@@ -201,4 +215,5 @@
    :r.user           front
    :r.logg           front
    :r.debug          front
-   :r.page-not-found (fn [r] [:div " ? "])})
+   :r.page-not-found (fn [r] [:div " ? "])
+   nil front})

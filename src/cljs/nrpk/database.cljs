@@ -10,7 +10,7 @@
     [schpaa.icon :as icon]
     [re-frame.core :as rf]))
 
-(def active-user "jon")
+(def active-user "arne")
 
 (o/defstyled flexed :div
   :flex :gap-4 :h-12 :items-stretch
@@ -102,7 +102,9 @@
                                                  :description @value}})) "Lag ny"]]
         (let [data (db/on-value-reaction {:path path})]
           [list-list active-item @data])
-        (let [path (str (.-host js/window.location) "/root/" (name active-item))]
+        (let [path (str (.-host js/window.location) "/root/" (if (keyword? active-item)
+                                                               (name active-item)
+                                                               active-item))]
           [:<>
            [:div path]
            [:> QRCode {:title "Whatever"
