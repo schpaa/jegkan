@@ -1,9 +1,12 @@
 (ns jegkan.spa
   (:require
+    [shadow.resource :refer [inline]]
     [lambdaisland.ornament :as o]
+    [garden.units :as u]
     [styles.core :as sc]
     [garden.core]
     [garden.core :refer [css]]
+    [schpaa.markdown]
     [garden.stylesheet :refer [at-font-face]]
     [reagent.core :as r]
     [tick.core :as t]
@@ -16,12 +19,6 @@
 (goog-define versionz "!")
 (goog-define dummy "!")
 
-(o/defstyled inter :div
-  :text-white
-  {:font-family           "Inter"
-   :font-weight           400
-   ;:font-size             "1rem"
-   :font-feature-settings "'cv10', 'salt', 'zero', 'tnum'"})
 
 (o/defstyled oclass :div
   {:color                      "red"
@@ -54,7 +51,7 @@
   :select-none
   :bg-bleu-500
   :text-bleu-100
-  ;sc/outlined
+
   [:div :h-16 {:place-items         :center
                :display             :grid
                :transition-duration "200ms"}
@@ -65,12 +62,11 @@
 
 ;(def active-item "-MwGxRMAnFYGhmbO6rf8")
 
-(def active-user "GASRi0")
+(def active-user "zzzGASRi0")
 
 (o/defstyled day :div
   :select-none
   :bg-black
-  ;sc/outlined
   [:.day :absolute :top-px :right-px :text-xs]
   [:.freq :absolute :bottom-px :left-px :text-xs]
   [:.weekend :bg-red-500-50]
@@ -78,7 +74,6 @@
   [:.container :h-16 {:position "relative"}
    [:.presence
     :inset-2
-    ;:mt-6
     :rounded
     {:position      "absolute"
      :justify-items :center
@@ -87,18 +82,18 @@
     [:&:hover :bg-bleu-500 {:transition-duration "200ms"}]]]
 
   ([m]
-   (let [a @(rf/subscribe [:some/get-active-item-key])
+   (let [a (some-> (rf/subscribe [:kee-frame/route]) deref :path-params :id)
          active-item (if (keyword? a) (name a) a)
          {:keys [freq a]} m
          preferred? (pos? freq)
-         c (db/on-value-reaction {:path ["root" active-item (str (t/date a))]})
+         c (db/on-value-reaction {:path ["root" active-item "slots" (str (t/date a))]})
          weekend? (some #{(t/int (t/day-of-week a))} #{6 7})]
      [:div.container
       {:class    [:item
                   (if weekend? :weekend)
                   (if preferred? :preferred)]
 
-       :on-click #(let [path ["root" active-item (str (t/date a))]
+       :on-click #(let [path ["root" active-item "slots" (str (t/date a))]
                         [k v] (get @c active-user)]
                     (if (get @c (keyword active-user))
                       (db/database-update {:path  path
@@ -106,7 +101,7 @@
                       (db/database-update {:path  path
                                            :value {active-user (str (t/time))}})))}
       [:div {:style {:background (if freq :red :blue)}}
-       [:div.day [inter (t/day-of-month a)]]
+       [:div.day [sc/inter (t/day-of-month a)]]
        (when (pos? (count @c))
          [:<>
           [:div.freq (count @c)]
@@ -117,7 +112,6 @@
 
 (o/defstyled calendar :div
   :bg-bleu-200 :w-full :text-white :p-2
-
   [:.grid :gap-px
    {:display               :grid
     :grid-template-columns "repeat(7,1fr)"}
@@ -131,10 +125,8 @@
 
       (for [e (range 60)]
         (let [date (t/>> from (t/new-period e :days))]
-          [:<>
-           ;[l/ppre-x result (get result (str (t/date date)))]
-           [day {:freq (get result (str (t/date date)))
-                 :a    date}]]))])))
+          [day {:freq (get result (str (t/date date)))
+                :a    date}]))])))
 
 (o/defstyled date-list :div
   [:.all :bg-bleu-100 :space-y-px]
@@ -150,28 +142,104 @@
                 [:div date]
                 [:div freq]])]))
 
-(defn front []
-  (let [a @(rf/subscribe [:some/get-active-item-key])
-        active-item (if (keyword? a) (name a) a)
-        data (get @(db/on-value-reaction {:path ["root"]}) (keyword active-item))
-        result (into {} (take 5 (sort-by second > (reduce (fn [a [k v]] (assoc a (name k) (count v))) {} data))))]
-    [:div
-     ;[l/ppre-x "  " active-item data @(db/on-value-reaction {:path ["root"]})]
-     #_[l/mon
-        active-item
-        data
-        result]
-     [calendar
-      {:result result
-       :from   (t/now)
-       :to     (t/>> (t/now) (t/new-period 60 :days))}]
-     [date-list (sort-by second > (sort-by first < result))]
-     [sc/centered-button #(db/database-push {:path ["root"] :value {:item "ugh"}}) false :circle-plus]]))
+(o/defstyled not-found :div
+  ([r]
+   [:div "not found"]))
+
+(o/defstyled listitem :a
+  :flex :flex-col
+  [:& :justify-center :h-16 :bg-gray-100
+   [:&:hover :bg-gray-200]]
+  [:.listitem   :px-4  :space-y-1 :text-base {}
+   [:.small :text-xs :text-gray-400]]
+  ([description link date uid]
+   [:a.listitem {:href link}
+    [:div description]
+    [:div.small (str date)]]))
+
+(o/defstyled h1 :h1
+  {:font-size      :200%
+   :font-weight    200
+   :font-family    "Inter"
+   :letter-spacing :0.025rem
+   :line-height    1.625})
+
+(o/defstyled h2 :h2
+  {:font-size      :125%
+   :font-weight    700
+   :font-family    "Inter"
+   :letter-spacing :0.025rem
+   :line-height    1.5})
+
+(o/defstyled h3 :h3
+  :mt-2
+  {:font-size      :100%
+   :font-weight    600
+   :font-family    "Inter"
+   :letter-spacing :0.025rem
+   :line-height    1.25})
+
+(o/defstyled p :p
+  :text-gray-500
+  :mb-2
+  {:font-size      :100%
+   :font-family    "Inter"
+   :letter-spacing 0
+   :line-height    1.5})
+
+(o/defstyled markdown :div
+  :p-4 :mx-auto
+  {:max-width "32rem"}
+  [:h1 h1]
+  [:h2 h2]
+  [:h3 h3]
+  [:p p]
+  ([content]
+   [:div content]))
+
+(o/defstyled front :div
+  :space-y-px
+  ([r]
+   (let [path ["root"]
+         data (some-> (db/on-value-reaction {:path path}) deref)]
+     [:<>
+      [markdown (schpaa.markdown/md->html (inline "./intro.md"))]
+      (for [[k {:keys [date description uid]}] data]
+        [listitem description (kee-frame.core/path-for [:r.topic {:id k}]) (t/date (t/instant date)) uid])])))
+
+;(comment
+;  #_(let [a (-> r :path-params :id)
+;          active-item (if (keyword? a) (name a) a)
+;          data @(db/on-value-reaction {:path ["root" active-item]})
+;          result (into {} (take 5 (sort-by second > (reduce (fn [a [k v]] (assoc a (name k) (count v))) {} data))))]
+;      [:div
+;       [:div "WHY IS THIS USEFUL NOW?"]
+;       #_#_[calendar
+;            {:result result
+;             :from   (t/now)
+;             :to     (t/>> (t/now) (t/new-period 60 :days))
+;             [date-list (sort-by second > (sort-by first < result))
+;             #_[sc/centered-button #(db/database-push {:path ["root"] :value {:item "ugh"}}) false :circle-plus]]}]]))
+
+
+
 
 (defn topic [r]
-  [:div
-   (l/ppre-x r)
-   [:div "TOPIC"]])
+  ;todo what about nonexistent topics?
+  (let [active-item (-> r :path-params :id)
+        active-item (if (keyword? active-item) (name active-item) active-item)]
+    [:<>
+     ;[l/ppre (get @(db/on-value-reaction {:path ["root" active-item]}) :slots)]
+     (if-let [data @(db/on-value-reaction {:path ["root" active-item]})]
+       (let [result (into {} (take 5 (sort-by second > (reduce (fn [a [k v]] (assoc a (name k) (count v))) {} (get data :slots)))))]
+         [:div
+          [calendar
+           {:result result
+            :from   (t/now)
+            :to     (t/>> (t/now) (t/new-period 60 :days))}]
+          [date-list (sort-by second > (sort-by first < result))]
+          [sc/centered-button #(db/database-push {:path ["root"] :value {:item "ugh"}}) false :circle-plus]])
+       [:div "nope " active-item])]))
 
 ; (let [{:keys [bg fg- fg+ hd p p- he]} (st/fbg' 0)
 ;        user-auth (rf/subscribe [::db/user-auth])]
@@ -206,14 +274,6 @@
 ;      [welcome])))
 
 (def route-table
-  {:r.topic topic
-   :r.forsiden       front
-   :r.new-booking    front
-   :r.booking-blog   front
-   ;:r.debug2         front
-   ;:r.blog           front
-   :r.user           front
-   :r.logg           front
-   :r.debug          front
-   :r.page-not-found (fn [r] [:div " ? "])
-   nil front})
+  {:r.topic     topic
+   :r.forsiden  front
+   :r.not-found not-found})

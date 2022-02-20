@@ -52,7 +52,7 @@
 
 (rf/reg-sub :some/get-active-item-key (fn [db]
                                         (let [k (first (:active-item db))]
-                                          (tap> k)
+                                          ;(tap> k)
                                           k)))
 
 (rf/reg-sub :some/get-active-item-description
@@ -72,43 +72,60 @@
   [:.active :bg-green-500]
   [:.small :text-xs]
   ([active-item data]
-   #_(for [[_ e] @data
-           :let [{:keys [description date]} e]]
-       [button false #() [flexed description [sc/small-icon :qr-code]]])
-   [:div.all (doall (for [[k {:keys [description date]} :as e] data]
+   [:div.all (doall (for [[k {:keys [description date]} :as e] data
+                          :let [k (if (keyword? k) (name k) k)]]
                       [:div.listitem.grid
-                       {:class (if (= k active-item) :active)
-                        :on-click #(rf/dispatch [:some/set-active-item e])}
+                       {:class    (if (= k active-item) :active)
+                        :on-click #(rf/dispatch [:app/navigate-to [:r.topic {:id k}]])}
                        [:div description]
-                       ;[textinput value]
-                       [button false #(produce-qr-code {:path [k]}) [sc/small-icon :qr-code]]
+                       [:div]
+                       ;[button false #(produce-qr-code {:path [k]}) [sc/small-icon :qr-code]]
                        [:div.small (str (t/date (t/instant date)))]]))]))
+
+(o/defstyled qr-code :div
+  :space-y-4 :flex :justify-center :flex-col :items-center
+  :border-2 :border-gray-500 :p-4 :rounded-sm
+  [:>a :w-full :px-4 {:overflow :hidden
+                      :text-overflow :ellipsis
+                      :white-space :nowrap}]
+  ([active-item]
+   (let [addr (kee-frame.core/path-for [:r.topic {:id active-item}])
+         path (str (.-protocol js/window.location) "//" (.-host js/window.location) addr)]
+     [:<>
+      [:> QRCode {:title "Whatever"
+                  :size  256
+                  :level "Q"
+                  :value path}]
+
+      ;[:div addr]
+      ;[:div (.-host js/window.location)]
+      ;[:div (.-protocol js/window.location)]
+      [:a {:href path} path]])))
 
 (o/defstyled cloud-content :div
   :p-4 :space-y-4
-  sc/outlined
   ([]
    (let [path ["topics" active-user]
-         active-item @(rf/subscribe [:some/get-active-item-key])]
+         active-item (some-> (rf/subscribe [:kee-frame/route]) deref :path-params :id)]
      (r/with-let [value (r/atom "")]
        [:<>
-        [:div "Content"]
-        [l/ppre @(rf/subscribe [:some/get-active-item-key])]
+        ;[:div "Content"]
+        ;[l/ppre active-item]
         [flexed
          [textinput value]
-         [button (empty? @value) #(do (db/database-push
-                                        {:path  path
-                                         :value {:date        (str (t/now))
-                                                 :description @value}})) "Lag ny"]]
-        (let [data (db/on-value-reaction {:path path})]
+         [button (empty? @value) #(let [path ["root"]
+                                        data {:uid         active-user
+                                              :date        (str (t/now))
+                                              :description @value}]
+                                    (let [id (.-key (db/database-push
+                                                      {:path  path
+                                                       :value data}))]
+                                      (db/database-update {:path ["tapas" active-user id]
+                                                           :value data})))
+          "Lag ny"]]
+        (let [path ["tapas" active-user]
+              data (db/on-value-reaction {:path path})]
           [list-list active-item @data])
-        (let [path (str (.-host js/window.location) "/root/" (if (keyword? active-item)
-                                                               (name active-item)
-                                                               active-item))]
-          [:<>
-           [:div path]
-           [:> QRCode {:title "Whatever"
-                       :size  256
-                       :level "Q"
-                       :value path}]])]))))
-
+        (let [active-item (if (keyword? active-item) (name active-item) active-item)]
+          (when active-item
+            [qr-code active-item]))]))))
