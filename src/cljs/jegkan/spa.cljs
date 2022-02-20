@@ -166,11 +166,17 @@
 (o/defstyled listitem :a
   :flex :flex-col
   [:& :justify-center :h-16 :bg-gray-100
-   [:&:hover :bg-gray-200]]
-  [:.listitem :px-4 :space-y-1 :text-base {}
-   [:.small :text-xs :text-gray-400]]
-  ([description link date uid]
-   [:a.listitem {:href link}
+   [:&:hover :bg-gray-200]
+
+   [:>.owner  :justify-center :h-16 :bg-blue-300 :p-4
+    [:.small :text-xs :text-gray-100]
+    [:&:hover :bg-blue-400]]
+
+   [:.listitem :px-4 :space-y-1 :text-base {}
+    [:.small :text-xs :text-gray-400]]]
+  ([description link date uid owner?]
+   [:a {:class (if owner? :owner :listitem)
+        :href  link}
     [:div description]
     [:div.small (str date)]]))
 
@@ -178,12 +184,18 @@
 (o/defstyled front :div
   :space-y-px
   ([r]
-   (let [path ["root"]
+   (let [active-user (:uid @(rf/subscribe [::db/user-auth]))
+         path ["root"]
          data (some-> (db/on-value-reaction {:path path}) deref)]
      [:<>
       [sc/markdown (schpaa.markdown/md->html (inline "./intro.md"))]
       (for [[k {:keys [date description uid]}] data]
-        [listitem description (kee-frame.core/path-for [:r.topic {:id k}]) (t/date (t/instant date)) uid])])))
+        [listitem
+         description
+         (kee-frame.core/path-for [:r.topic {:id k}])
+         (t/date (t/instant date))
+         uid
+         (= uid active-user)])])))
 
 ;(comment
 ;  #_(let [a (-> r :path-params :id)

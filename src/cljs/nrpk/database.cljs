@@ -95,14 +95,15 @@
 (o/defstyled cloud-content :div
   :p-4 :space-y-4
   ([]
-   (let [path ["topics" active-user]
+   (let [active-user (:uid @(rf/subscribe [::db/user-auth]))
+         path ["topics" active-user]
          active-item (some-> (rf/subscribe [:kee-frame/route]) deref :path-params :id)]
      (r/with-let [value (r/atom "")]
        [:<>
         ;[:div "Content"]
         ;[l/ppre active-item]
         [flexed
-         [sc/textinput value]
+         [sc/textinput {:value @value} value]
          [button (empty? @value) #(let [path ["root"]
                                         data {:uid         active-user
                                               :date        (str (t/now))
