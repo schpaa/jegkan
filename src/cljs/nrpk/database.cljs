@@ -17,15 +17,6 @@
   ([& xs]
    [:<> xs]))
 
-(o/defstyled textinput :div
-  [:input :w-full :bg-gray-100 :h-full :px-2 :rounded-sm :border-2 :border-gray-200]
-  ([value]
-   [:input
-    {:type      "text"
-     :value     (-> value deref)
-     :on-change #(let [v (-> % .-target .-value)]
-                   (reset! value v))}]))
-
 (o/defstyled button :button
   [:>button
    :h-12 :rounded-sm :bg-gray-200 :shadow-sm :disabled:bg-gray-500-10 :disabled:text-black-10
@@ -38,7 +29,6 @@
     {:on-click on-click
      :disabled disabled?}
     caption]))
-
 
 (defn produce-qr-code [path]
   (js/alert path))
@@ -112,7 +102,7 @@
         ;[:div "Content"]
         ;[l/ppre active-item]
         [flexed
-         [textinput value]
+         [sc/textinput value]
          [button (empty? @value) #(let [path ["root"]
                                         data {:uid         active-user
                                               :date        (str (t/now))

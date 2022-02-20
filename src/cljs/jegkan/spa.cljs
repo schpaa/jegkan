@@ -19,7 +19,6 @@
 (goog-define versionz "!")
 (goog-define dummy "!")
 
-
 (o/defstyled oclass :div
   {:color                      "red"
    :outline                    "dashed 1px black"
@@ -62,11 +61,12 @@
 
 ;(def active-item "-MwGxRMAnFYGhmbO6rf8")
 
-(def active-user "zzzGASRi0")
+(def active-user "PeterGASRi0")
 
 (o/defstyled day :div
   :select-none
   :bg-black
+
   [:.day :absolute :top-px :right-px :text-xs]
   [:.freq :absolute :bottom-px :left-px :text-xs]
   [:.weekend :bg-red-500-50]
@@ -82,7 +82,8 @@
     [:&:hover :bg-bleu-500 {:transition-duration "200ms"}]]]
 
   ([m]
-   (let [a (some-> (rf/subscribe [:kee-frame/route]) deref :path-params :id)
+   (let [active-user (:uid @(rf/subscribe [::db/user-auth]))
+         a (some-> (rf/subscribe [:kee-frame/route]) deref :path-params :id)
          active-item (if (keyword? a) (name a) a)
          {:keys [freq a]} m
          preferred? (pos? freq)
@@ -142,6 +143,22 @@
                 [:div date]
                 [:div freq]])]))
 
+(o/defstyled user-list :div
+  :py-px :select-none :bg-gray-200
+  [:.all :bg-white :space-y-px]
+  [:.listitem :bg-pink-500 :text-black :h-12 {:display     :grid
+                                              :place-items :center}
+   [:&:hover :bg-pink-500-80 :text-black]]
+  [:.grid :gap-px {:display               "grid"
+                   :grid-template-columns "repeat(auto-fill,minmax(10rem,1fr))"
+                   :align-items           :center
+                   :grid-auto-rows        "auto"}]
+  ([data]
+   [:div.grid
+    (for [uid data]
+      [:div.listitem uid])]))
+
+
 (o/defstyled not-found :div
   ([r]
    [:div "not found"]))
@@ -150,52 +167,13 @@
   :flex :flex-col
   [:& :justify-center :h-16 :bg-gray-100
    [:&:hover :bg-gray-200]]
-  [:.listitem   :px-4  :space-y-1 :text-base {}
+  [:.listitem :px-4 :space-y-1 :text-base {}
    [:.small :text-xs :text-gray-400]]
   ([description link date uid]
    [:a.listitem {:href link}
     [:div description]
     [:div.small (str date)]]))
 
-(o/defstyled h1 :h1
-  {:font-size      :200%
-   :font-weight    200
-   :font-family    "Inter"
-   :letter-spacing :0.025rem
-   :line-height    1.625})
-
-(o/defstyled h2 :h2
-  {:font-size      :125%
-   :font-weight    700
-   :font-family    "Inter"
-   :letter-spacing :0.025rem
-   :line-height    1.5})
-
-(o/defstyled h3 :h3
-  :mt-2
-  {:font-size      :100%
-   :font-weight    600
-   :font-family    "Inter"
-   :letter-spacing :0.025rem
-   :line-height    1.25})
-
-(o/defstyled p :p
-  :text-gray-500
-  :mb-2
-  {:font-size      :100%
-   :font-family    "Inter"
-   :letter-spacing 0
-   :line-height    1.5})
-
-(o/defstyled markdown :div
-  :p-4 :mx-auto
-  {:max-width "32rem"}
-  [:h1 h1]
-  [:h2 h2]
-  [:h3 h3]
-  [:p p]
-  ([content]
-   [:div content]))
 
 (o/defstyled front :div
   :space-y-px
@@ -203,7 +181,7 @@
    (let [path ["root"]
          data (some-> (db/on-value-reaction {:path path}) deref)]
      [:<>
-      [markdown (schpaa.markdown/md->html (inline "./intro.md"))]
+      [sc/markdown (schpaa.markdown/md->html (inline "./intro.md"))]
       (for [[k {:keys [date description uid]}] data]
         [listitem description (kee-frame.core/path-for [:r.topic {:id k}]) (t/date (t/instant date)) uid])])))
 
@@ -221,9 +199,6 @@
 ;             [date-list (sort-by second > (sort-by first < result))
 ;             #_[sc/centered-button #(db/database-push {:path ["root"] :value {:item "ugh"}}) false :circle-plus]]}]]))
 
-
-
-
 (defn topic [r]
   ;todo what about nonexistent topics?
   (let [active-item (-> r :path-params :id)
@@ -238,8 +213,13 @@
             :from   (t/now)
             :to     (t/>> (t/now) (t/new-period 60 :days))}]
           [date-list (sort-by second > (sort-by first < result))]
-          [sc/centered-button #(db/database-push {:path ["root"] :value {:item "ugh"}}) false :circle-plus]])
-       [:div "nope " active-item])]))
+          #_[sc/centered-button #(db/database-push {:path ["root"] :value {:item "ugh"}}) false :circle-plus]])
+       [:div "nope " active-item])
+     (let [data (into #{} (reduce (fn [a e] (flatten (conj a (keys (val e))))) [] @(db/on-value-reaction {:path ["root" active-item "slots"]})))]
+       [user-list data]
+       #_[:<>
+          [l/ppre data]
+          [:div {:style {:height "32rem"}}]])]))
 
 ; (let [{:keys [bg fg- fg+ hd p p- he]} (st/fbg' 0)
 ;        user-auth (rf/subscribe [::db/user-auth])]
