@@ -146,9 +146,14 @@
 (o/defstyled user-list :div
   :py-px :select-none :bg-gray-200
   [:.all :bg-white :space-y-px]
-  [:.listitem :bg-pink-500 :text-black :h-12 {:display     :grid
+  [:.listitem :bg-pink-500 :text-black :h-12 {:display :grid
                                               :place-items :center}
    [:&:hover :bg-pink-500-80 :text-black]]
+  [:.clamp :px-2 {"-webkit-box-orient" "vertical"
+                  "-webkit-line-clamp" 2
+                  :overflow :hidden
+                  :line-clamp 2
+                  :display     "-webkit-box"}]
   [:.grid :gap-px {:display               "grid"
                    :grid-template-columns "repeat(auto-fill,minmax(10rem,1fr))"
                    :align-items           :center
@@ -156,7 +161,7 @@
   ([data]
    [:div.grid
     (for [uid data]
-      [:div.listitem uid])]))
+      [:div.listitem>div.clamp uid])]))
 
 
 (o/defstyled not-found :div
