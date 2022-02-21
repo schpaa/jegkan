@@ -169,12 +169,12 @@
    [:&:hover :bg-gray-200]
 
    [:>.owner  :justify-center :h-16 :bg-blue-300 :p-4
-    [:.small :text-xs :text-gray-100]
+    [:.small :text-xs :text-blue-600]
     [:&:hover :bg-blue-400]]
 
    [:.listitem :px-4 :space-y-1 :text-base {}
     [:.small :text-xs :text-gray-400]]]
-  ([description link date uid owner?]
+  ([{:keys [owner?]} description link date uid]
    [:a {:class (if owner? :owner :listitem)
         :href  link}
     [:div description]
@@ -188,14 +188,14 @@
          path ["root"]
          data (some-> (db/on-value-reaction {:path path}) deref)]
      [:<>
-      [sc/markdown (schpaa.markdown/md->html (inline "./intro.md"))]
+      ;[sc/markdown (schpaa.markdown/md->html (inline "./intro.md"))]
       (for [[k {:keys [date description uid]}] data]
-        [listitem
+        [listitem {:owner? (= uid active-user)}
          description
          (kee-frame.core/path-for [:r.topic {:id k}])
          (t/date (t/instant date))
-         uid
-         (= uid active-user)])])))
+         uid])])))
+
 
 ;(comment
 ;  #_(let [a (-> r :path-params :id)
