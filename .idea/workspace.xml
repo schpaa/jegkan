@@ -6,7 +6,16 @@
   <component name="ChangeListManager">
     <list default="true" id="be89c0ad-2110-4096-ba65-d55c6440e833" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/schpaa/src/schpaa/components/screen.cljs" beforeDir="false" afterPath="$PROJECT_DIR$/lib/schpaa/src/schpaa/components/screen.cljs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/schpaa/src/schpaa/components/sidebar.cljs" beforeDir="false" afterPath="$PROJECT_DIR$/lib/schpaa/src/schpaa/components/sidebar.cljs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/schpaa/src/schpaa/components/sidebar/toolbar.cljs" beforeDir="false" afterPath="$PROJECT_DIR$/lib/schpaa/src/schpaa/components/sidebar/toolbar.cljs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/schpaa/src/schpaa/components/simple_header.cljs" beforeDir="false" afterPath="$PROJECT_DIR$/lib/schpaa/src/schpaa/components/simple_header.cljs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/styles/src/styles/core.cljs" beforeDir="false" afterPath="$PROJECT_DIR$/lib/styles/src/styles/core.cljs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/jegkan/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/public/jegkan/index.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/cljs/jegkan/sidebar.cljs" beforeDir="false" afterPath="$PROJECT_DIR$/src/cljs/jegkan/sidebar.cljs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/cljs/jegkan/spa.cljs" beforeDir="false" afterPath="$PROJECT_DIR$/src/cljs/jegkan/spa.cljs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/cljs/nrpk/database.cljs" beforeDir="false" afterPath="$PROJECT_DIR$/src/cljs/nrpk/database.cljs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/cljs/nrpk/spa.cljs" beforeDir="false" afterPath="$PROJECT_DIR$/src/cljs/nrpk/spa.cljs" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -135,7 +144,7 @@
     <property name="project.structure.last.edited" value="Modules" />
     <property name="project.structure.proportion" value="0.15" />
     <property name="project.structure.side.proportion" value="0.2" />
-    <property name="settings.editor.selected.configurable" value="preferences.pluginManager" />
+    <property name="settings.editor.selected.configurable" value="reference.settingsdialog.IDE.editor.colors" />
   </component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
@@ -147,7 +156,7 @@
       <recent name="$PROJECT_DIR$/src/clj" />
     </key>
   </component>
-  <component name="ReplState" timestamp="1645427636193">{:repl-history {:ide [], :local [], :remote [{:command &quot;(shadow/quit)&quot;, :offset 13, :ns &quot;schpaa.components.simple-header&quot;} {:command &quot;(lambdaisland.ornament/defined-styles)&quot;, :offset 38, :ns &quot;shadow.user&quot;} {:command &quot;(css [:at-font-face {:font-family           \&quot;\\\&quot;Inter var experimental, sans-serif\\\&quot;\&quot;\n                     :font-weight           \&quot;100 900\&quot;\n                     :font-display          :swap\n                     :font-style            \&quot;oblique 0deg 10deg\&quot;\n                     :font-feature-settings \&quot;\\\&quot;salt\\\&quot; 1, \\\&quot;zero\\\&quot; 1\&quot;\n                     :src                   \&quot;url(\\\&quot;/fonts/Inter.var.woff2?v=3.19\\\&quot;) format(\\\&quot;woff2\\\&quot;);\&quot;}])&quot;, :offset 429, :ns &quot;cljs.user&quot;} {:command &quot;(shadow/repl)&quot;, :offset 13, :ns &quot;jegkan.spa&quot;} {:command &quot;re-frame.db/app-db&quot;, :offset 18, :ns &quot;cljs.user&quot;} {:command &quot;@re-frame.db/app-db&quot;, :offset 19, :ns &quot;cljs.user&quot;} {:command &quot;:repl/quit&quot;, :offset 10, :ns &quot;cljs.user&quot;} {:command &quot;(shadow/repl :jegkan)&quot;, :offset 21, :ns &quot;my.hooks&quot;}]}}</component>
+  <component name="ReplState" timestamp="1645459007511">{:repl-history {:ide [], :local [], :remote [{:command &quot;(shadow/quit)&quot;, :offset 13, :ns &quot;schpaa.components.simple-header&quot;} {:command &quot;(lambdaisland.ornament/defined-styles)&quot;, :offset 38, :ns &quot;shadow.user&quot;} {:command &quot;(css [:at-font-face {:font-family           \&quot;\\\&quot;Inter var experimental, sans-serif\\\&quot;\&quot;\n                     :font-weight           \&quot;100 900\&quot;\n                     :font-display          :swap\n                     :font-style            \&quot;oblique 0deg 10deg\&quot;\n                     :font-feature-settings \&quot;\\\&quot;salt\\\&quot; 1, \\\&quot;zero\\\&quot; 1\&quot;\n                     :src                   \&quot;url(\\\&quot;/fonts/Inter.var.woff2?v=3.19\\\&quot;) format(\\\&quot;woff2\\\&quot;);\&quot;}])&quot;, :offset 429, :ns &quot;cljs.user&quot;} {:command &quot;(shadow/repl)&quot;, :offset 13, :ns &quot;jegkan.spa&quot;} {:command &quot;re-frame.db/app-db&quot;, :offset 18, :ns &quot;cljs.user&quot;} {:command &quot;@re-frame.db/app-db&quot;, :offset 19, :ns &quot;cljs.user&quot;} {:command &quot;:repl/quit&quot;, :offset 10, :ns &quot;cljs.user&quot;} {:command &quot;(shadow/repl :jegkan)&quot;, :offset 21, :ns &quot;my.hooks&quot;}]}}</component>
   <component name="RunManager">
     <configuration default="true" type="Babashka" factoryName="BabashkaLocalRepl" activateToolWindowBeforeRun="false">
       <setting name="displayName" value="" />
@@ -304,7 +313,13 @@
       <option name="presentableId" value="LOCAL−00016" />
       <updated>1645427034119</updated>
     </task>
-    <option name="localTasksCounter" value="17" />
+    <task id="LOCAL−00017" summary="line-clamp">
+      <created>1645427649449</created>
+      <option name="number" value="LOCAL−00017" />
+      <option name="presentableId" value="LOCAL−00017" />
+      <updated>1645427649449</updated>
+    </task>
+    <option name="localTasksCounter" value="18" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -331,6 +346,7 @@
     <MESSAGE value="form complete" />
     <MESSAGE value="moved help-text" />
     <MESSAGE value="display usernames in slots" />
-    <option name="LAST_COMMIT_MESSAGE" value="display usernames in slots" />
+    <MESSAGE value="line-clamp" />
+    <option name="LAST_COMMIT_MESSAGE" value="line-clamp" />
   </component>
 </project>

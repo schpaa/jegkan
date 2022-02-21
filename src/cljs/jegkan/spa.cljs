@@ -65,12 +65,15 @@
 
 (o/defstyled day :div
   :select-none
-  :bg-black
+  :bg-black-20
 
-  [:.day :absolute :top-px :right-px :text-xs]
-  [:.freq :absolute :bottom-px :left-px :text-xs]
-  [:.weekend :bg-red-500-50]
-  [:.preferred :bg-green-500-50]
+  [:.day :absolute :top-1 :right-1 :text-xs]
+  [:.freq :absolute :bottom-1 :left-1 :text-xs {:color "var(--gray-9)"}
+   [:.filled :rounded-full :bg-black :w-5 {:background-color "var(--yellow-6)"
+                                           :aspect-ratio "1"}]
+   [:.centered   :flex :flex-center :justify-center :items-center]]
+  [:.weekend :bg-red-400-20]
+  [:.preferred {:background-color "var(--green-9)"}]
   [:.container :h-16 {:position "relative"}
    [:.presence
     :inset-2
@@ -101,11 +104,11 @@
                                            :value {active-user nil}})
                       (db/database-update {:path  path
                                            :value {active-user (str (t/time))}})))}
-      [:div {:style {:background (if freq :red :blue)}}
+      [:div {:style {:background-color (if freq :red :blue)}}
        [:div.day [sc/inter (t/day-of-month a)]]
        (when (pos? (count @c))
          [:<>
-          [:div.freq (count @c)]
+          [:div.freq>div.filled.centered (count @c)]
           (if (get @c (keyword active-user))
             [:div
              {:class :presence}
@@ -143,63 +146,75 @@
                 [:div date]
                 [:div freq]])]))
 
+(o/defstyled line-clamp-2 :div
+  [:& :px-2 {"-webkit-box-orient" "vertical"
+             "-webkit-line-clamp" 2
+             :overflow :hidden
+             :line-clamp 2
+             :display     "-webkit-box"}]
+  ([& content]
+   content))
+
 (o/defstyled user-list :div
-  :py-px :select-none :bg-gray-200
-  [:.all :bg-white :space-y-px]
-  [:.listitem :bg-pink-500 :text-black :h-12 {:display :grid
-                                              :place-items :center}
-   [:&:hover :bg-pink-500-80 :text-black]]
-  [:.clamp :px-2 {"-webkit-box-orient" "vertical"
-                  "-webkit-line-clamp" 2
-                  :overflow :hidden
-                  :line-clamp 2
-                  :display     "-webkit-box"}]
-  [:.grid :gap-px {:display               "grid"
-                   :grid-template-columns "repeat(auto-fill,minmax(10rem,1fr))"
-                   :align-items           :center
-                   :grid-auto-rows        "auto"}]
+  :py-px :select-none :bg-pink-300
+  [:.grid :gap-px
+   {:display               "grid"
+    :grid-template-columns "repeat(auto-fill,minmax(7rem,1fr))"
+    :align-items           :center
+    :grid-auto-rows        "auto"}]
+  [:.listitem :bg-pink-500 :text-black :h-12
+   {:display :grid :place-items :center}
+   [:&:hover :bg-pink-500-80 :text-pink-900]]
   ([data]
    [:div.grid
     (for [uid data]
-      [:div.listitem>div.clamp uid])]))
-
+      [:div.listitem [line-clamp-2 uid]])]))
 
 (o/defstyled not-found :div
   ([r]
    [:div "not found"]))
 
-(o/defstyled listitem :a
-  :flex :flex-col
-  [:& :justify-center :h-16 :bg-gray-100
-   [:&:hover :bg-gray-200]
+#_(o/defstyled listitem :a
+    :flex :flex-col
+    [:& :justify-center :xh-16 :bg-gray-100
+     [:&:hover :bg-gray-200]
 
-   [:>.owner  :justify-center :h-16 :bg-blue-300 :p-4
-    [:.small :text-xs :text-blue-600]
-    [:&:hover :bg-blue-400]]
+     [:>.owner  :justify-center :h-16 :bg-blue-300 :p-4
+      [:.small :text-xs :text-blue-600]
+      [:&:hover :bg-blue-400]]
 
-   [:.listitem :px-4 :space-y-1 :text-base {}
-    [:.small :text-xs :text-gray-400]]]
-  ([{:keys [owner?]} description link date uid]
-   [:a {:class (if owner? :owner :listitem)
-        :href  link}
-    [:div description]
-    [:div.small (str date)]]))
+     [:.listitem :px-4 :space-y-1 :text-base {}
+      [:.small :text-xs :text-gray-400]]]
+    ([description link date uid {:keys [owner?]}]
+     [sc/row'
+      [sc/fronticon :circle {}]
+      [:a {:class (if owner? :owner :listitem)
+           :href  link}
+       [:div description]
+       [:div.small (str date)]]]))
 
+
+(defn username [users e]
+  (let [u (get users (keyword e))]
+    (cond (:anonymous u) (:alias u "?") :else (:display-name u "?"))))
 
 (o/defstyled front :div
   :space-y-px
   ([r]
    (let [active-user (:uid @(rf/subscribe [::db/user-auth]))
          path ["root"]
-         data (some-> (db/on-value-reaction {:path path}) deref)]
+         data (some-> (db/on-value-reaction {:path path}) deref)
+         users @(db/on-value-reaction {:path ["jegkan-users"]})]
      [:<>
       ;[sc/markdown (schpaa.markdown/md->html (inline "./intro.md"))]
-      (for [[k {:keys [date description uid]}] data]
-        [listitem {:owner? (= uid active-user)}
+
+      (for [[k {:keys [date description uid]}] data
+            :let [date (some-> date (t/instant) (t/date) (str))]]
+        [sc/listitem-content
          description
-         (kee-frame.core/path-for [:r.topic {:id k}])
-         (t/date (t/instant date))
-         uid])])))
+         [sc/row [:div date] [:div (username users uid)]]
+         {:on-click    #(rf/dispatch [:app/navigate-to [:r.topic {:id k}]])
+          :with-before (when (= uid active-user) [sc/fronticon :three-vertical-dots {:on-click #(js/alert (str "oops" k))}])}])])))
 
 
 ;(comment
@@ -234,7 +249,9 @@
        [:div "nope " active-item])
      (let [users @(db/on-value-reaction {:path ["jegkan-users"]})
            data (into #{} (reduce (fn [a e] (flatten (conj a (keys (val e))))) [] @(db/on-value-reaction {:path ["root" active-item "slots"]})))]
-       [user-list (map (fn [e] (let [u (get users e)] (cond (:anonymous u) (:alias u "?") :else (:display-name u "?")))) data)])]))
+       [:<>
+        [sc/instruction "You may exclude members from this calendar by clicking on their name"]
+        [user-list (map (partial username users) data)]])]))
 
 ; (let [{:keys [bg fg- fg+ hd p p- he]} (st/fbg' 0)
 ;        user-auth (rf/subscribe [::db/user-auth])]

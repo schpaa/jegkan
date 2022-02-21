@@ -39,7 +39,8 @@
        {:show?     (or (:modal @s) (:modal-forced @s))
         :config-fn (:modal-config-fn @s)}]
       [components.screen/render
-       {:user-auth             (fn [] @(rf/subscribe [:db.core/user-auth]))
+       {:tabdata jegkan.sidebar/tabs-data
+        :user-auth             (fn [] @(rf/subscribe [:db.core/user-auth]))
         :current-page          (fn [] @(rf/subscribe [:app/current-page]))
         :toggle-menu-open      (fn [] (rf/dispatch [:toggle-menu-open]))
         :navigate-to-home      (fn [] (rf/dispatch [:app/navigate-to @(rf/subscribe [:app/previous :active-front :r.forsiden])]))
