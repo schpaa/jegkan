@@ -65,15 +65,18 @@
 
 (o/defstyled day :div
   :select-none
-  :bg-black-20
+  {:background-color "var(--gray-1)"
+   :color            :black}
+  [:.day :absolute :top-1 :right-1 :left-1 :text-xs
+   [:div :flex :justify-between]]
 
-  [:.day :absolute :top-1 :right-1 :text-xs]
-  [:.freq :absolute :bottom-1 :left-1 :text-xs {:color "var(--gray-9)"}
-   [:.filled :rounded-full :bg-black :w-5 {:background-color "var(--yellow-6)"
-                                           :aspect-ratio "1"}]
-   [:.centered   :flex :flex-center :justify-center :items-center]]
-  [:.weekend :bg-red-400-20]
-  [:.preferred {:background-color "var(--green-9)"}]
+  [:.freq :absolute :bottom-1 :left-1 :text-xs {:font-weight "var(--font-weight-5)"
+                                                :color       "var(--yellow-5)"}
+   [:.filled :rounded-full :bg-black :h-5 {:background-color "var(--gray-8)"
+                                           :aspect-ratio     "1"}]
+   [:.centered :flex :flex-center :justify-center :items-center]]
+  [:.weekend {:background "var(--red-2)"}]
+  [:.preferred :text-white {:background-color "var(--green-9)"}]
   [:.container :h-16 {:position "relative"}
    [:.presence
     :inset-2
@@ -83,7 +86,6 @@
      :align-items   :center
      :display       "grid"}
     [:&:hover :bg-bleu-500 {:transition-duration "200ms"}]]]
-
   ([m]
    (let [active-user (:uid @(rf/subscribe [::db/user-auth]))
          a (some-> (rf/subscribe [:kee-frame/route]) deref :path-params :id)
@@ -96,7 +98,6 @@
       {:class    [:item
                   (if weekend? :weekend)
                   (if preferred? :preferred)]
-
        :on-click #(let [path ["root" active-item "slots" (str (t/date a))]
                         [k v] (get @c active-user)]
                     (if (get @c (keyword active-user))
@@ -105,7 +106,10 @@
                       (db/database-update {:path  path
                                            :value {active-user (str (t/time))}})))}
       [:div {:style {:background-color (if freq :red :blue)}}
-       [:div.day [sc/inter (t/day-of-month a)]]
+       [:div.day [:div
+                  [:div (subs (str (t/day-of-week a)) 0 2)]
+                  [:div (t/day-of-month a)]
+                  [:div (t/int (t/month a))]]]
        (when (pos? (count @c))
          [:<>
           [:div.freq>div.filled.centered (count @c)]
@@ -115,20 +119,22 @@
              [sc/small-icon :checked]])])]])))
 
 (o/defstyled calendar :div
-  :bg-bleu-200 :w-full :text-white :p-2
+  :w-full :text-white :p-2
+  {:background-color "var(--gray-5)"}
   [:.grid :gap-px
    {:display               :grid
     :grid-template-columns "repeat(7,1fr)"}
    :.content {:max-width "32rem"
               :margin    :auto}]
   ([m]
-   (let [{:keys [from to result]} m]
+   (let [{:keys [from to result]} m
+         from (t/at (t/new-date 2022 1 1) (t/noon))]
      [:div.grid
       (for [e (reverse (range 1 (t/int (t/day-of-week from))))]
         [past-day (t/<< from (t/new-period e :days))])
 
-      (for [e (range 60)]
-        (let [date (t/>> from (t/new-period e :days))]
+      (for [e (range 190)]
+        (let [date (t/>> from (t/new-duration e :days))]
           [day {:freq (get result (str (t/date date)))
                 :a    date}]))])))
 
@@ -149,9 +155,9 @@
 (o/defstyled line-clamp-2 :div
   [:& :px-2 {"-webkit-box-orient" "vertical"
              "-webkit-line-clamp" 2
-             :overflow :hidden
-             :line-clamp 2
-             :display     "-webkit-box"}]
+             :overflow            :hidden
+             :line-clamp          2
+             :display             "-webkit-box"}]
   ([& content]
    content))
 
@@ -179,7 +185,7 @@
     [:& :justify-center :xh-16 :bg-gray-100
      [:&:hover :bg-gray-200]
 
-     [:>.owner  :justify-center :h-16 :bg-blue-300 :p-4
+     [:>.owner :justify-center :h-16 :bg-blue-300 :p-4
       [:.small :text-xs :text-blue-600]
       [:&:hover :bg-blue-400]]
 
@@ -195,7 +201,8 @@
 
 
 (defn username [users e]
-  (let [u (get users (keyword e))]
+  (let [users @(db/on-value-reaction {:path ["jegkan-users"]})
+        u (get users (keyword e))]
     (cond (:anonymous u) (:alias u "?") :else (:display-name u "?"))))
 
 (o/defstyled front :div
