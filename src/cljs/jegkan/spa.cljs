@@ -227,11 +227,9 @@
           [date-list (sort-by second > (sort-by first < result))]
           #_[sc/centered-button #(db/database-push {:path ["root"] :value {:item "ugh"}}) false :circle-plus]])
        [:div "nope " active-item])
-     (let [data (into #{} (reduce (fn [a e] (flatten (conj a (keys (val e))))) [] @(db/on-value-reaction {:path ["root" active-item "slots"]})))]
-       [user-list data]
-       #_[:<>
-          [l/ppre data]
-          [:div {:style {:height "32rem"}}]])]))
+     (let [users @(db/on-value-reaction {:path ["jegkan-users"]})
+           data (into #{} (reduce (fn [a e] (flatten (conj a (keys (val e))))) [] @(db/on-value-reaction {:path ["root" active-item "slots"]})))]
+       [user-list (map (fn [e] (let [u (get users e)] (cond (:anonymous u) (:alias u "?") :else (:display-name u "?")))) data)])]))
 
 ; (let [{:keys [bg fg- fg+ hd p p- he]} (st/fbg' 0)
 ;        user-auth (rf/subscribe [::db/user-auth])]
