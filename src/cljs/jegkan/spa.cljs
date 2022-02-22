@@ -277,11 +277,14 @@
         [sc/row [:div date] [:div (username users uid)]]
         {:on-click    #(rf/dispatch [:app/navigate-to [:r.topic {:id k}]])
          :with-before (when (= uid active-user)
-                        [sc/fronticon :three-vertical-dots
-                         {:on-click #(readymade/ok-cancel {:title   "title"
-                                                           :content (str "Her kommer litt tekst som du må lese, hvis ikke går det deg ille" k)
-                                                           :footer  "Some footers here"
-                                                           :ok      (fn [] (tap> :OK))})}])}]))))
+                        [sc/fronticon
+                         {:on-click #(do (readymade/ok-cancel
+                                           {:title   "title"
+                                            :content "Her kommer litt tekst som du må lese, hvis ikke går det deg ille"
+                                            :footer  (str k)
+                                            :ok      (fn [] (tap> :OK))})
+                                         (.stopPropagation %))}
+                         [sc/small-icon :three-vertical-dots]])}]))))
 
 
 ;(comment
