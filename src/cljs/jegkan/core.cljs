@@ -6,7 +6,7 @@
     [re-statecharts.core :as rs]
     [jegkan.appdata :as app-data]
     [jegkan.spa :as spa]
-    ;[booking.fsm-model]))
+    [jegkan.fsm-model]  
     [schpaa.darkmode]
     [lambdaisland.ornament :as o]
     [db.core :as db]

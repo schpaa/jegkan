@@ -15,7 +15,8 @@
     [schpaa.debug :as l]
     [re-frame.core :as rf]
     [schpaa.icon :as icon]
-    [times.api :as ta]))
+    [times.api :as ta]
+    [schpaa.modal.readymade :as readymade]))
 
 (goog-define versionz "!")
 (goog-define dummy "!")
@@ -263,21 +264,24 @@
 
 (o/defstyled front :div
   :space-y-px
+  {:background-color "var(--surface1)"}
   ([r]
    (let [active-user (:uid @(rf/subscribe [::db/user-auth]))
          path ["root"]
          data (some-> (db/on-value-reaction {:path path}) deref)
          users @(db/on-value-reaction {:path ["jegkan-users"]})]
-     [:<>
-      ;[sc/markdown (schpaa.markdown/md->html (inline "./intro.md"))]
-
-      (for [[k {:keys [date description uid]}] data
-            :let [date (some-> date (t/instant) (t/date) (str))]]
-        [sc/listitem-content
-         description
-         [sc/row [:div date] [:div (username users uid)]]
-         {:on-click    #(rf/dispatch [:app/navigate-to [:r.topic {:id k}]])
-          :with-before (when (= uid active-user) [sc/fronticon :three-vertical-dots {:on-click #(js/alert (str "oops" k))}])}])])))
+     (for [[k {:keys [date description uid]}] data
+           :let [date (some-> date (t/instant) (t/date) (str))]]
+       [sc/listitem-content
+        description
+        [sc/row [:div date] [:div (username users uid)]]
+        {:on-click    #(rf/dispatch [:app/navigate-to [:r.topic {:id k}]])
+         :with-before (when (= uid active-user)
+                        [sc/fronticon :three-vertical-dots
+                         {:on-click #(readymade/ok-cancel {:title   "title"
+                                                           :content (str "Her kommer litt tekst som du må lese, hvis ikke går det deg ille" k)
+                                                           :footer  "Some footers here"
+                                                           :ok      (fn [] (tap> :OK))})}])}]))))
 
 
 ;(comment

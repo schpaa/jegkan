@@ -1,12 +1,15 @@
 (ns nrpk.spa
-  (:require [re-frame.core :as rf] 
+  (:require [re-frame.core :as rf]
             [re-statecharts.core :as rs]
             ["body-scroll-lock" :as body-scroll-lock]
             [schpaa.modal :as modal]
             [schpaa.components.screen :as components.screen]
             [nrpk.fsm-helpers :as state :refer [send]]
             [kee-frame.router :refer [make-route-component]]
-            [schpaa.debug :as l]))
+            [styles.core :as sc]
+            [jegkan.sidebar]
+            [schpaa.debug :as l]
+            [reagent.core :as r]))
 
 (defn- forced-scroll-lock
   [locked? target]
@@ -17,6 +20,10 @@
         (.enableBodyScroll body-scroll-lock body)
         (.clearAllBodyScrollLocks body-scroll-lock)))))
 
+(defonce a (r/atom false))
+;(js/setInterval #(swap! a not) 2000)
+
+
 (defn dispatch-main [web-content]
   (let [s (rf/subscribe [::rs/state-full :main-fsm])
         expose-app-db @(schpaa.state/listen :app/expose-app-db)
@@ -24,10 +31,11 @@
     [:div.h-full
      (when expose-app-db
        [l/ppre-x (dissoc @re-frame.db/app-db :kee-frame/route :re-statecharts.core/fsm-state)])
-     [modal/overlay-with
+     [sc/overlay-with
       {:short-timeout (:modal-short-timeout @s)             ;;todo When showing a popup with short-timeout (< 2 seconds auto-closes), just bypass the click to dismiss
        :modal-dim     (:modal-dim @s)
-       :modal?        (or (:modal @s)
+       :modal?        (or @a
+                          (:modal @s)
                           (:modal-forced @s))
        ;When forced, a click on the  background will noe dismiss the modal
        ;the user must click on a button in the modal to dismiss it
@@ -36,10 +44,10 @@
                         #(send :e.hide))}
       ;;content
       [modal/render
-       {:show?     (or (:modal @s) (:modal-forced @s))
+       {:show?     (or @a (:modal @s) (:modal-forced @s))
         :config-fn (:modal-config-fn @s)}]
       [components.screen/render
-       {:tabdata jegkan.sidebar/tabs-data
+       {:tabdata               jegkan.sidebar/tabs-data
         :user-auth             (fn [] @(rf/subscribe [:db.core/user-auth]))
         :current-page          (fn [] @(rf/subscribe [:app/current-page]))
         :toggle-menu-open      (fn [] (rf/dispatch [:toggle-menu-open]))

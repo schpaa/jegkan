@@ -7,6 +7,7 @@
             [db.signin :as signin]
             [tick.core :as t]
             [re-frame.core :as rf]
+            [schpaa.modal.readymade :as readymade]
             [schpaa.debug :as l]))
 
 (defn help []
@@ -70,7 +71,8 @@
          "Lag ny"]]
        (let [path ["tapas" active-user]
              data (db/on-value-reaction {:path path})]
-         [sc/list-list active-item @data])
+         [sc/list-list active-item @data {:three-dot-click #(readymade/message {:title %
+                                                                                :content "show more in a popup!"})}])
        (let [active-item (if (keyword? active-item) (name active-item) active-item)]
          (when active-item
            [sc/qr-code active-item]))])))
