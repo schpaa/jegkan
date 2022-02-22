@@ -1,0 +1,41 @@
+:root {
+   --brand-dim: var(--orange-4);
+   --text1-dim: var(--gray-3);
+   --text2-dim: var(--gray-5);
+   --surface1-dim: var(--gray-9);
+   --surface2-dim: var(--gray-8);
+   --surface3-dim: var(--gray-7);
+   --surface4-dim: var(--gray-4);
+
+   --brand-light: var(--orange-6);
+   --text1-light: var(--gray-8);
+   --text2-light: var(--gray-7);
+   --surface1-light: var(--gray-1);
+   --surface2-light: var(--gray-0);
+   --surface3-light: var(--gray-3);
+   --surface4-light: var(--gray-5);
+}
+
+@media (prefers-color-scheme: light) {
+    :root {
+       --brand: var(--brand-light);
+       --text1: var(--text1-light);
+       --text2: var(--text2-light);
+       --surface1: var(--surface1-light);
+       --surface2: var(--surface2-light);
+       --surface3: var(--surface3-light);
+       --surface4: var(--surface4-light);
+    }
+}
+
+@media (prefers-color-scheme: dark) {
+    :root {
+      --brand: var(--brand-dim);
+      --text1: var(--text1-dim);
+      --text2: var(--text2-dim);
+      --surface1: var(--surface1-dim);
+      --surface2: var(--surface2-dim);
+      --surface3: var(--surface3-dim);
+      --surface4: var(--surface4-dim);
+  }
+}

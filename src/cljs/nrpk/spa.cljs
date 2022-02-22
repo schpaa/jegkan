@@ -63,7 +63,9 @@
         menu-open? (rf/subscribe [:app/menu-open?])
         s (rf/subscribe [::rs/state-full :main-fsm])]
     (.setAttribute html "class" (if (= :dark @user-screenmode) "dark" ""))
-    (.setAttribute body "class" "font-sans bg-gray-600 dark:bg-gray-800 ") ;fixme "min-h-screen overflow-x-hidden"
+    (.setAttribute body
+                   "style" "background-color: var(--surface1)"
+                   "class" "font-sans bg-gray-600 dark:bg-gray-800 ") ;fixme "min-h-screen overflow-x-hidden"
     (forced-scroll-lock (or @menu-open?
                             (and (or (:modal @s)
                                      (:modal-forced @s))

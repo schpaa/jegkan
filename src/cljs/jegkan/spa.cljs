@@ -14,7 +14,8 @@
     [db.auth :as auth]
     [schpaa.debug :as l]
     [re-frame.core :as rf]
-    [schpaa.icon :as icon]))
+    [schpaa.icon :as icon]
+    [times.api :as ta]))
 
 (goog-define versionz "!")
 (goog-define dummy "!")
@@ -63,10 +64,16 @@
 
 (def active-user "PeterGASRi0")
 
+(o/defstyled center :div
+  :flex :items-start :p-1 :justify-center   :text-xs {:background-color "var(--surface1)"
+                                                      :color "var(--text2)"})
+
 (o/defstyled day :div
-  :select-none
-  {:background-color "var(--gray-1)"
-   :color            :black}
+  :select-none :border-r ;:border-gray-400
+  {:background-color "var(--surface3)"
+   :color            "var(--text1)"
+   :border-color "var(--surface1)"}
+  [:div.month-name :uppercase :font-bold]
   [:.day :absolute :top-1 :right-1 :left-1 :text-xs
    [:div :flex :justify-between]]
 
@@ -75,9 +82,11 @@
    [:.filled :rounded-full :bg-black :h-5 {:background-color "var(--gray-8)"
                                            :aspect-ratio     "1"}]
    [:.centered :flex :flex-center :justify-center :items-center]]
-  [:.weekend {:background "var(--red-2)"}]
+  [:.weekend {:background [:rgba 255 0 0 0.2]
+              :-color "black"}]
+  [:div.dim :border-l-4 :border-gray-400x {:border-color "var(--surface1)"}]
   [:.preferred :text-white {:background-color "var(--green-9)"}]
-  [:.container :h-16 {:position "relative"}
+  [:.container :h-8 {:position "relative"}
    [:.presence
     :inset-2
     :rounded
@@ -87,7 +96,8 @@
      :display       "grid"}
     [:&:hover :bg-bleu-500 {:transition-duration "200ms"}]]]
   ([m]
-   (let [active-user (:uid @(rf/subscribe [::db/user-auth]))
+   (let [{:keys [dim?]} m
+         active-user (:uid @(rf/subscribe [::db/user-auth]))
          a (some-> (rf/subscribe [:kee-frame/route]) deref :path-params :id)
          active-item (if (keyword? a) (name a) a)
          {:keys [freq a]} m
@@ -95,7 +105,8 @@
          c (db/on-value-reaction {:path ["root" active-item "slots" (str (t/date a))]})
          weekend? (some #{(t/int (t/day-of-week a))} #{6 7})]
      [:div.container
-      {:class    [:item
+      {:class    [(if dim? :dim)
+                  :item
                   (if weekend? :weekend)
                   (if preferred? :preferred)]
        :on-click #(let [path ["root" active-item "slots" (str (t/date a))]
@@ -107,9 +118,10 @@
                                            :value {active-user (str (t/time))}})))}
       [:div {:style {:background-color (if freq :red :blue)}}
        [:div.day [:div
-                  [:div (subs (str (t/day-of-week a)) 0 2)]
+                  #_[:div (subs (str (t/day-of-week a)) 0 2)]
+                  [:div.month-name (when (= 1 (t/day-of-month a))(ta/month-name a :length 3))]
                   [:div (t/day-of-month a)]
-                  [:div (t/int (t/month a))]]]
+                  #_[:div (t/int (t/month a))]]]
        (when (pos? (count @c))
          [:<>
           [:div.freq>div.filled.centered (count @c)]
@@ -118,25 +130,69 @@
              {:class :presence}
              [sc/small-icon :checked]])])]])))
 
-(o/defstyled calendar :div
-  :w-full :text-white :p-2
-  {:background-color "var(--gray-5)"}
-  [:.grid :gap-px
-   {:display               :grid
-    :grid-template-columns "repeat(7,1fr)"}
-   :.content {:max-width "32rem"
-              :margin    :auto}]
-  ([m]
-   (let [{:keys [from to result]} m
-         from (t/at (t/new-date 2022 1 1) (t/noon))]
-     [:div.grid
-      (for [e (reverse (range 1 (t/int (t/day-of-week from))))]
-        [past-day (t/<< from (t/new-period e :days))])
+(o/defstyled week :div
+  {:display               :grid
+   :grid-template-columns "repeat(7,1fr)"}
+  [:div.prev :border-b-4 :border-gray-400x {:border-color "var(--surface1)"}]
+  [:div.next :border-t-4 :border-gray-400x {:border-color "var(--surface1)"}]
+  ([w]
+   (let [first-dt (ta/calc-first-day-at-week w)
+         month-first (t/month first-dt)
+         month-change? (not= month-first
+                             (t/month (t/>> first-dt (t/new-period 7 :days))))]
+     (for [e (range 7)
+           :let [month-this (t/month (t/>> first-dt (t/new-period e :days)))
+                 split? (and
+                          (not= 0 e)
+                          (not= month-this
+                                (t/month (t/>> first-dt (t/new-period (dec e) :days)))))]]
+       [:div {:class (if month-change? (if (= month-this month-first) :prev :next))}
+        [day {:dim?   split?
+              :a      (t/>> first-dt (t/new-period e :days))}]]))))
 
-      (for [e (range 190)]
-        (let [date (t/>> from (t/new-duration e :days))]
-          [day {:freq (get result (str (t/date date)))
-                :a    date}]))])))
+(o/defstyled week-header :div
+  {:display               :grid
+   :grid-template-columns "repeat(7,1fr)"}
+  [:div  :border-b :border-r  :flex :items-center :justify-center
+   {:color "var(--text2)"
+    :border-color "var(--surface1)"
+    :background-color "var(--surface1)"}])
+                                       
+(o/defstyled calendar :div                
+  :w-full :text-white :py-pxx
+  {:background-color "var(--surface1)"}
+
+  [:div.week-header :border-b :flex :items-center :justify-center
+   {:color "var(--text2)"
+    :border-color "var(--surface1)"
+    :background-color "var(--surface1)"}]
+  [:div.header :sticky :text-xs  :w-full :top-16 :text-black :z-10 :h-6]
+  [:div.weeks :gap-px {:display               :grid
+                       
+                       :grid-template-columns "3rem 1fr" 
+                       :max-width             "32rem"
+                       :margin                :auto}]
+  [:.grid ;:gap-px
+   {:display               :grid
+    :grid-template-columns "repeat(7,1fr)"
+    :max-width             "32rem"
+    :margin                :auto}]
+  ([m]                     
+   (let [{:keys [from to result]} m
+         from (t/at (t/new-date 2022 5 12) (t/noon))
+         to (t/at (t/new-date 2022 10 12) (t/noon))
+         days (-> (tick.alpha.interval/bounds from to) t/duration t/days)
+         wn (ta/week-number from)]
+     [:<>
+      [:div.weeks.header
+       [:div.week-header ""]
+       [week-header (for [e (range 7)]
+                      [:div (ta/day-name' e :length 3)])]]
+      [:div.weeks
+       (for [w (range (ta/week-number from) (ta/week-number to))]
+         [:<>
+          [center "u" w]
+          [week w]])]])))
 
 (o/defstyled date-list :div
   [:.all :bg-bleu-100 :space-y-px]
