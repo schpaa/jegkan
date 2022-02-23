@@ -10,7 +10,8 @@
             [schpaa.debug :as l]
             [lambdaisland.ornament :as o]
             [styles.core :as sc]
-            [styles.utils :as su :refer [grid5 grid5-with-gap label]]))
+            [styles.utils :as su :refer [grid5 grid5-with-gap label]]
+            [times.api :as ta]))
 
 (defn help []
   [sc/markdown (schpaa.markdown/md->html (inline "./intro.md"))])
@@ -124,7 +125,7 @@
                :value     value
                :on-change on-change}]])))
 
-(defn navigation []
+(defn navigation' []
   [:<>
    [sc/padded
     [grid5 {:style {:grid-gap "8px"}}
@@ -219,6 +220,63 @@
    #_[footer (into [small-grid]
                    (for [i (range 4)]
                      [sc/small-base-button [sc/small-icon :chat-square]]))]])
+
+(rf/reg-event-db :tab-selection (fn [db [_ v]] (assoc db :tab-selection v)))
+(rf/reg-sub :tab-selection :-> :tab-selection)
+
+(defn get-username [uid]
+  (let [u (db/on-value-reaction {:path ["users" uid]})]
+    (or (some-> u deref :alias)
+        (some-> u deref :navn)
+        (subs uid 0 10))))
+
+(def get-username-memoed (memoize get-username))
+
+(o/defstyled heading :div
+  :space-y-1 :p-2 sc/outlined)
+
+(o/defstyled content-item :div
+  :bg-orange-100)
+
+(defn cloud-content []
+  (let [path ["presence"]
+        data @(db/on-value-reaction {:path path})
+        presence-state @(rf/subscribe [::db/presence-status])]
+    [:div
+     [heading (ta/format "%d offline" (count (:offline presence-state)))]
+
+     (for [[k v] (:offline presence-state)]
+       (let [instant (t/instant (js/Date. (:lastOnline v)))
+             date (ta/date-format instant)
+             time (ta/time-format instant)]
+         [sc/listitem-content
+          (get-username (name k))
+          [sc/row date time]]))
+
+     [heading (ta/format "%d online" (count (:online presence-state)))]
+
+     [:div {:style {:display :grid
+                    :row-gap "1px"}}
+      (for [[k v] (:online presence-state)]
+        [sc/listitem-content
+         (get-username (name k))
+         (:connections v)])]]))
+
+(defn navigation []
+  (let [selection (rf/subscribe [:tab-selection])]
+    [:div
+     ;[l/ppre-x @re-frame.db/app-db]
+     [sc/padded
+      (into [grid5-with-gap] (map (fn [idx e] [sc/tabsquare {:style    {:border-radius (str "var(--radius-blob-" (inc idx) ")")
+                                                                        :background    (if (= @selection e) "var(--button2)" "none")}
+                                                             :on-click #(rf/dispatch [:tab-selection e])} e])
+                                  (range)
+                                  ["A" "B" "C" "1" "2"]))]
+     [sc/padded
+      (case @selection
+        "A" [cloud-content]
+        nil)]]))
+
 
 (def tabs-data
   {:list      {:icon    :compass
