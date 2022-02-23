@@ -4,9 +4,10 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="be89c0ad-2110-4096-ba65-d55c6440e833" name="Changes" comment="">
+    <list default="true" id="be89c0ad-2110-4096-ba65-d55c6440e833" name="Changes" comment="initial">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/styles/src/styles/core.cljs" beforeDir="false" afterPath="$PROJECT_DIR$/lib/styles/src/styles/core.cljs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/package-lock.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/package.json" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/cljs/jegkan/sidebar.cljs" beforeDir="false" afterPath="$PROJECT_DIR$/src/cljs/jegkan/sidebar.cljs" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -107,7 +108,10 @@
     <setting file="file://$PROJECT_DIR$/lib/schpaa/src/schpaa/icon.cljs" root0="SKIP_INSPECTION" />
     <setting file="file://$PROJECT_DIR$/lib/schpaa/src/schpaa/components/screen.cljs" root0="SKIP_INSPECTION" />
     <setting file="file://$PROJECT_DIR$/lib/styles/src/styles/core.cljs" root0="SKIP_INSPECTION" />
+    <setting file="jar://$MAVEN_REPOSITORY$/org/clojure/clojurescript/1.10.896/clojurescript-1.10.896.jar!/cljs/core.cljs" root0="SKIP_INSPECTION" />
     <setting file="jar://$MAVEN_REPOSITORY$/org/clojure/clojure/1.10.3/clojure-1.10.3.jar!/clojure/core.clj" root0="SKIP_INSPECTION" />
+    <setting file="jar://$MAVEN_REPOSITORY$/org/clojure/clojurescript/1.10.896/clojurescript-1.10.896.jar!/clojure/string.cljs" root0="SKIP_INSPECTION" />
+    <setting file="file://$PROJECT_DIR$/lib/styles/src/styles/utils.cljs" root0="SKIP_INSPECTION" />
     <setting file="file://$PROJECT_DIR$/lib/schpaa/src/schpaa/components/simple_header.cljs" root0="SKIP_INSPECTION" />
     <setting file="file://$PROJECT_DIR$/lib/schpaa/src/schpaa/components/sidebar/toolbar.cljs" root0="SKIP_INSPECTION" />
   </component>
@@ -150,7 +154,7 @@
       <recent name="$PROJECT_DIR$/src/clj" />
     </key>
   </component>
-  <component name="ReplState" timestamp="1645626598948">{:repl-history {:ide [], :local [], :remote [{:command &quot;(shadow/quit)&quot;, :offset 13, :ns &quot;schpaa.components.simple-header&quot;} {:command &quot;(lambdaisland.ornament/defined-styles)&quot;, :offset 38, :ns &quot;shadow.user&quot;} {:command &quot;(css [:at-font-face {:font-family           \&quot;\\\&quot;Inter var experimental, sans-serif\\\&quot;\&quot;\n                     :font-weight           \&quot;100 900\&quot;\n                     :font-display          :swap\n                     :font-style            \&quot;oblique 0deg 10deg\&quot;\n                     :font-feature-settings \&quot;\\\&quot;salt\\\&quot; 1, \\\&quot;zero\\\&quot; 1\&quot;\n                     :src                   \&quot;url(\\\&quot;/fonts/Inter.var.woff2?v=3.19\\\&quot;) format(\\\&quot;woff2\\\&quot;);\&quot;}])&quot;, :offset 429, :ns &quot;cljs.user&quot;} {:command &quot;(shadow/repl)&quot;, :offset 13, :ns &quot;jegkan.spa&quot;} {:command &quot;re-frame.db/app-db&quot;, :offset 18, :ns &quot;cljs.user&quot;} {:command &quot;@re-frame.db/app-db&quot;, :offset 19, :ns &quot;cljs.user&quot;} {:command &quot;:repl/quit&quot;, :offset 10, :ns &quot;cljs.user&quot;} {:command &quot;(shadow/repl :jegkan)&quot;, :offset 21, :ns &quot;my.hooks&quot;}]}}</component>
+  <component name="ReplState" timestamp="1645658246628">{:repl-history {:ide [], :local [], :remote [{:command &quot;(shadow/quit)&quot;, :offset 13, :ns &quot;schpaa.components.simple-header&quot;} {:command &quot;(lambdaisland.ornament/defined-styles)&quot;, :offset 38, :ns &quot;shadow.user&quot;} {:command &quot;(css [:at-font-face {:font-family           \&quot;\\\&quot;Inter var experimental, sans-serif\\\&quot;\&quot;\n                     :font-weight           \&quot;100 900\&quot;\n                     :font-display          :swap\n                     :font-style            \&quot;oblique 0deg 10deg\&quot;\n                     :font-feature-settings \&quot;\\\&quot;salt\\\&quot; 1, \\\&quot;zero\\\&quot; 1\&quot;\n                     :src                   \&quot;url(\\\&quot;/fonts/Inter.var.woff2?v=3.19\\\&quot;) format(\\\&quot;woff2\\\&quot;);\&quot;}])&quot;, :offset 429, :ns &quot;cljs.user&quot;} {:command &quot;(shadow/repl)&quot;, :offset 13, :ns &quot;jegkan.spa&quot;} {:command &quot;re-frame.db/app-db&quot;, :offset 18, :ns &quot;cljs.user&quot;} {:command &quot;@re-frame.db/app-db&quot;, :offset 19, :ns &quot;cljs.user&quot;} {:command &quot;:repl/quit&quot;, :offset 10, :ns &quot;schpaa.modal.readymade&quot;} {:command &quot;(shadow/repl :jegkan)e&quot;, :offset 22, :ns &quot;my.hooks&quot;} {:command &quot;(shadow/repl :jegkan)&quot;, :offset 21, :ns &quot;my.hooks&quot;}]}}</component>
   <component name="RunManager">
     <configuration default="true" type="Babashka" factoryName="BabashkaLocalRepl" activateToolWindowBeforeRun="false">
       <setting name="displayName" value="" />
@@ -349,7 +353,13 @@
       <option name="presentableId" value="LOCAL−00023" />
       <updated>1645622295613</updated>
     </task>
-    <option name="localTasksCounter" value="24" />
+    <task id="LOCAL−00024" summary="preparations for headlessui">
+      <created>1645626615241</created>
+      <option name="number" value="LOCAL−00024" />
+      <option name="presentableId" value="LOCAL−00024" />
+      <updated>1645626615241</updated>
+    </task>
+    <option name="localTasksCounter" value="25" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -383,6 +393,7 @@
     <MESSAGE value="dialogs" />
     <MESSAGE value="fields" />
     <MESSAGE value="basis" />
-    <option name="LAST_COMMIT_MESSAGE" value="basis" />
+    <MESSAGE value="preparations for headlessui" />
+    <option name="LAST_COMMIT_MESSAGE" value="preparations for headlessui" />
   </component>
 </project>

@@ -11,7 +11,15 @@
             [lambdaisland.ornament :as o]
             [styles.core :as sc]
             [styles.utils :as su :refer [grid5 grid5-with-gap label]]
-            [times.api :as ta]))
+            [times.api :as ta]
+            ["react" :refer [Fragment]]
+            ["@headlessui/react" :refer [Menu Menu.Button Menu.Items Menu.Item
+                                         Popover Popover.Button Popover.Panel Popover.Overlay
+                                         Combobox Combobox.Option Combobox.Options Combobox.Input
+                                         Disclosure Disclosure.Button Disclosure.Panel]]
+
+
+            [clojure.string :as str]))
 
 (defn help []
   [sc/markdown (schpaa.markdown/md->html (inline "./intro.md"))])
@@ -97,9 +105,9 @@
 
 
 (o/defstyled textfield :div
-  [:input {:outline :none
+  [:input {:outline   :none
            :font-size "var(--font-size-2)"
-           :color   "var(--text1)"}]
+           :color     "var(--text1)"}]
   [:div.with-label :flex :flex-col :justify-between :h-full :w-full :p-2 :bg-white
    {:border-radius "var(--radius-1)"
     :box-shadow    "var(--inner-shadow-1)"}
@@ -115,11 +123,11 @@
      [:div.with-label
       [su/label {:style {:text-align :right}
                  :for   id} label]
-      [:input {:id id
+      [:input {:id          id
                :placeholder "placeholder"
-               :type      :text
-               :value     value
-               :on-change on-change}]]
+               :type        :text
+               :value       value
+               :on-change   on-change}]]
      [:div.no-label
       [:input {:type      :text
                :value     value
@@ -160,7 +168,7 @@
        [sc/buttonsquare {:style {:grid-column "span 1"}} [sc/small-icon :three-vertical-dots]]
        [textfield {:style     {;:min-height "4rem"
                                :grid-column "2/-1"}
-                   
+
                    :on-change #(reset! v (-> % .-target .-value))
                    :value     @v}]
        #_[sc/button [sc/small-icon :plus]]])
@@ -262,9 +270,75 @@
          (get-username (name k))
          (:connections v)])]]))
 
+(o/defstyled sample-open :div
+  :bg-red-500 :text-white :px-4 :py-2 :rounded)
+
+(o/defstyled sample-item :div
+  :bg-blue-500 :text-white :px-4 :py-2 :rounded)
+
+(o/defstyled popover-button :div)
+(o/defstyled popover-panel :div)
+(o/defstyled overlay :div
+  {:position         :fixed
+   :top              0
+   :bottom           0
+   :left             0
+   :right            "-10px"
+   :opacity          0.75
+   :background-color "red"})
+
+(o/defstyled nice-textinput :input
+  :px-4 :py-2 :rounded :border :border-black)
+
+(o/defstyled nice-listitem :div
+  [:& :bg-white :select-none
+   [:.item :py-4 :px-4]
+   [:>.highlighted :bg-orange-500]
+   [:>.disabled :text-gray-500 :opacity-50]
+   [:>.selected :bg-green-500]]
+  ([{:keys [selected highlighted disabled]} content]
+   [:div.item
+    {:class [(if selected :selected)
+             (if disabled :disabled)
+             (if highlighted :highlighted)]}
+    content]))
+
+(o/defstyled nice-combo :div
+  :bg-red-500 :py-4)
+
+(def people [{:id "1" :navn "Arne Bo"}
+             {:id "2" :navn "Arvid Carlsen"}
+             {:id       "3" :navn "Peter Pan"
+              :disabled true}
+             {:id "4" :navn "Siggurd Sverd"}])
+
+(def person-by-id (zipmap (map :id people) people))
+
+(o/defstyled disco :div
+  :bg-orange-500
+  ([]
+   [:> Disclosure.Panel {:static true} (fn[e] (r/as-element [:div [l/ppre e] [:div "Stuff"]]))]))
+
+(o/defstyled disco-button :div
+  :bg-blue-500 :h-12 :flex :items-center :px-2
+  ([props children]
+   [:> Disclosure.Button props (fn [e] (r/as-element [:div [l/ppre e]
+                                                      [:div "DIOS"]]))]))
+
+(o/defstyled disclosure :div
+  :bg-pink-200 :h-16
+  ([props children]
+   [:> Disclosure props children #_(fn[_] (r/as-element [:div
+                                                         children
+                                                         "x"]))]))
+
+(defn panel-ul [props children]
+  (into [:ul.bg-red-500 props] children))
+
 (defn navigation []
   (let [selection (rf/subscribe [:tab-selection])]
     [:div
+     {:style {:position :static}}
      ;[l/ppre-x @re-frame.db/app-db]
      [sc/padded
       (into [grid5-with-gap] (map (fn [idx e] [sc/tabsquare {:style    {:border-radius (str "var(--radius-blob-" (inc idx) ")")
@@ -275,8 +349,67 @@
      [sc/padded
       (case @selection
         "A" [cloud-content]
-        nil)]]))
+        "B" [:div
+             [:div ">"]
+             [:> Menu
+              [:> Menu.Button (fn [e] (r/as-element [sample-open "more" (str (.-open e))]))]
+              [:> Menu.Items {:xstatic true} (fn [e] (r/as-element [:div "xx"]))
+               [:> Menu.Item {:disabled false} (fn [e] (r/as-element [sample-item "A" (str (.-disabled e)
+                                                                                           (.-active e))]))]
+               [:> Menu.Item {:disabled true} (fn [e] (r/as-element [sample-item "A" (str (.-disabled e)
+                                                                                          (.-active e))]))]
+               [:> Menu.Item (fn [e] (r/as-element [sample-item "A" (str (.-active e))]))]]]]
+        "C" [:> Popover (fn [e] (r/as-element
+                                  [:div ">" (str e.open)
+                                   [:> Popover.Button [popover-button "POP" (str e.open)]]
+                                   [:> Popover.Overlay (fn [] (r/as-element [overlay]))]
+                                   [:> Popover.Panel {:static false} [popover-panel "stuff"]]]))]
+        "1" (r/with-let [query (r/atom "Ar")
+                         !selected (r/atom (last people))]
+              (let [filteredPeople (filter (fn [person] (clojure.string/includes? (:navn person) @query)) people)
+                    selected @!selected]
+                [:div
+                 [l/ppre @!selected]
+                 [:> Combobox {:value     (:id selected)
+                               :on-change #(do
+                                             (tap> %)
+                                             (reset! !selected (get person-by-id %)))}
+                  [:> Combobox.Input {:as            Fragment
+                                      :on-change     (fn [e] (reset! query (-> e .-target .-value)))
+                                      :display-value (fn [id] (:navn (get person-by-id id))) #_(fn [person] (:navn person))}
+                   (fn [e] (r/as-element [:div
+                                          (l/ppre e)
+                                          [nice-textinput {:placeholder "søk"}]]))]
+                  [nice-combo
+                   [:> Combobox.Options {:static true}
+                    (fn [e] (r/as-element
+                              [:div
+                               (l/ppre e)
+                               (for [person filteredPeople]
+                                 ^{:key (str (:id person))}
+                                 [:div
+                                  ;[:div (str e.open) "_" (str (.-activeIndex e))]
+                                  [:> Combobox.Option
+                                   {;:key      (:id person)
+                                    :value    person
+                                    :disabled (:disabled person)}
+                                   (fn [e] (r/as-element [:div
+                                                          (l/ppre e)
+                                                          [nice-listitem
+                                                           {:selected    (.-selected e)
+                                                            :disabled    (.-disabled e)
+                                                            :highlighted (.-active e)}
+                                                           [:div
+                                                            (l/ppr person)
+                                                            (str (:active (js->clj e)) (:selected (js->clj e)))]]]))]])]))]]]]))
+        "2" [:div
+             {:style {:height "200px"}}
+             [disclosure
+              
+              [disco-button]
+              [disco]]]
 
+        nil)]]))
 
 (def tabs-data
   {:list      {:icon    :compass
