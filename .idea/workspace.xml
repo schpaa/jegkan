@@ -4,13 +4,16 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="be89c0ad-2110-4096-ba65-d55c6440e833" name="Changes" comment="initial">
+    <list default="true" id="be89c0ad-2110-4096-ba65-d55c6440e833" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/lib/styles/src/styles/utils.cljs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/lib/schpaa/src/schpaa/components/screen.cljs" beforeDir="false" afterPath="$PROJECT_DIR$/lib/schpaa/src/schpaa/components/screen.cljs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/schpaa/src/schpaa/modal/readymade.cljs" beforeDir="false" afterPath="$PROJECT_DIR$/lib/schpaa/src/schpaa/modal/readymade.cljs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/schpaa/src/schpaa/components/sidebar.cljs" beforeDir="false" afterPath="$PROJECT_DIR$/lib/schpaa/src/schpaa/components/sidebar.cljs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/schpaa/src/schpaa/components/simple_header.cljs" beforeDir="false" afterPath="$PROJECT_DIR$/lib/schpaa/src/schpaa/components/simple_header.cljs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/lib/styles/src/styles/core.cljs" beforeDir="false" afterPath="$PROJECT_DIR$/lib/styles/src/styles/core.cljs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/cljs/jegkan/sidebar.cljs" beforeDir="false" afterPath="$PROJECT_DIR$/src/cljs/jegkan/sidebar.cljs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/cljs/jegkan/spa.cljs" beforeDir="false" afterPath="$PROJECT_DIR$/src/cljs/jegkan/spa.cljs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/cljs/nrpk/spa.cljs" beforeDir="false" afterPath="$PROJECT_DIR$/src/cljs/nrpk/spa.cljs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/template/css/colors.css" beforeDir="false" afterPath="$PROJECT_DIR$/template/css/colors.css" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -136,6 +139,7 @@
     <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
     <property name="cursive.last.file.extension./Users/chris/projects/2022/jegkan/lib/schpaa/src" value="cljs" />
     <property name="cursive.last.file.extension./Users/chris/projects/2022/jegkan/lib/styles/src" value="cljs" />
+    <property name="cursive.last.file.extension./Users/chris/projects/2022/jegkan/src/clj" value="cljs" />
     <property name="cursive.last.file.extension./Users/chris/projects/2022/jegkan/src/cljs" value="cljs" />
     <property name="last_opened_file_path" value="$PROJECT_DIR$/public/jegkan" />
     <property name="project.structure.last.edited" value="Modules" />
@@ -153,7 +157,7 @@
       <recent name="$PROJECT_DIR$/src/clj" />
     </key>
   </component>
-  <component name="ReplState" timestamp="1645570712586">{:repl-history {:ide [], :local [], :remote [{:command &quot;(shadow/quit)&quot;, :offset 13, :ns &quot;schpaa.components.simple-header&quot;} {:command &quot;(lambdaisland.ornament/defined-styles)&quot;, :offset 38, :ns &quot;shadow.user&quot;} {:command &quot;(css [:at-font-face {:font-family           \&quot;\\\&quot;Inter var experimental, sans-serif\\\&quot;\&quot;\n                     :font-weight           \&quot;100 900\&quot;\n                     :font-display          :swap\n                     :font-style            \&quot;oblique 0deg 10deg\&quot;\n                     :font-feature-settings \&quot;\\\&quot;salt\\\&quot; 1, \\\&quot;zero\\\&quot; 1\&quot;\n                     :src                   \&quot;url(\\\&quot;/fonts/Inter.var.woff2?v=3.19\\\&quot;) format(\\\&quot;woff2\\\&quot;);\&quot;}])&quot;, :offset 429, :ns &quot;cljs.user&quot;} {:command &quot;(shadow/repl)&quot;, :offset 13, :ns &quot;jegkan.spa&quot;} {:command &quot;re-frame.db/app-db&quot;, :offset 18, :ns &quot;cljs.user&quot;} {:command &quot;@re-frame.db/app-db&quot;, :offset 19, :ns &quot;cljs.user&quot;} {:command &quot;:repl/quit&quot;, :offset 10, :ns &quot;cljs.user&quot;} {:command &quot;(shadow/repl :jegkan)&quot;, :offset 21, :ns &quot;my.hooks&quot;}]}}</component>
+  <component name="ReplState" timestamp="1645622291081">{:repl-history {:ide [], :local [], :remote [{:command &quot;(shadow/quit)&quot;, :offset 13, :ns &quot;schpaa.components.simple-header&quot;} {:command &quot;(lambdaisland.ornament/defined-styles)&quot;, :offset 38, :ns &quot;shadow.user&quot;} {:command &quot;(css [:at-font-face {:font-family           \&quot;\\\&quot;Inter var experimental, sans-serif\\\&quot;\&quot;\n                     :font-weight           \&quot;100 900\&quot;\n                     :font-display          :swap\n                     :font-style            \&quot;oblique 0deg 10deg\&quot;\n                     :font-feature-settings \&quot;\\\&quot;salt\\\&quot; 1, \\\&quot;zero\\\&quot; 1\&quot;\n                     :src                   \&quot;url(\\\&quot;/fonts/Inter.var.woff2?v=3.19\\\&quot;) format(\\\&quot;woff2\\\&quot;);\&quot;}])&quot;, :offset 429, :ns &quot;cljs.user&quot;} {:command &quot;(shadow/repl)&quot;, :offset 13, :ns &quot;jegkan.spa&quot;} {:command &quot;re-frame.db/app-db&quot;, :offset 18, :ns &quot;cljs.user&quot;} {:command &quot;@re-frame.db/app-db&quot;, :offset 19, :ns &quot;cljs.user&quot;} {:command &quot;:repl/quit&quot;, :offset 10, :ns &quot;cljs.user&quot;} {:command &quot;(shadow/repl :jegkan)&quot;, :offset 21, :ns &quot;my.hooks&quot;}]}}</component>
   <component name="RunManager">
     <configuration default="true" type="Babashka" factoryName="BabashkaLocalRepl" activateToolWindowBeforeRun="false">
       <setting name="displayName" value="" />
@@ -340,7 +344,13 @@
       <option name="presentableId" value="LOCAL−00021" />
       <updated>1645547491691</updated>
     </task>
-    <option name="localTasksCounter" value="22" />
+    <task id="LOCAL−00022" summary="fields">
+      <created>1645570755389</created>
+      <option name="number" value="LOCAL−00022" />
+      <option name="presentableId" value="LOCAL−00022" />
+      <updated>1645570755391</updated>
+    </task>
+    <option name="localTasksCounter" value="23" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -372,6 +382,7 @@
     <MESSAGE value="datework" />
     <MESSAGE value="darkmode" />
     <MESSAGE value="dialogs" />
-    <option name="LAST_COMMIT_MESSAGE" value="dialogs" />
+    <MESSAGE value="fields" />
+    <option name="LAST_COMMIT_MESSAGE" value="fields" />
   </component>
 </project>

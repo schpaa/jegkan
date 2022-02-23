@@ -66,14 +66,14 @@
 (def active-user "PeterGASRi0")
 
 (o/defstyled center :div
-  :flex :items-start :p-1 :justify-center   :text-xs {:background-color "var(--surface1)"
+  :flex :items-start :p-1 :justify-center   :text-xs {:background-color "var(--surface3)"
                                                       :color "var(--text2)"})
 
 (o/defstyled day :div
   :select-none :border-r ;:border-gray-400
-  {:background-color "var(--surface3)"
+  {:background-color "var(--surface2)"
    :color            "var(--text1)"
-   :border-color "var(--surface1)"}
+   :border-color "var(--surface3)"}
   [:div.month-name :uppercase :font-bold]
   [:.day :absolute :top-1 :right-1 :left-1 :text-xs
    [:div :flex :justify-between]]
@@ -85,7 +85,7 @@
    [:.centered :flex :flex-center :justify-center :items-center]]
   [:.weekend {:background [:rgba 255 0 0 0.2]
               :-color "black"}]
-  [:div.dim :border-l-4 :border-gray-400x {:border-color "var(--surface1)"}]
+  [:div.dim :border-l-4 :border-gray-400x {:border-color "var(--surface3)"}]
   [:.preferred :text-white {:background-color "var(--green-9)"}]
   [:.container :h-8 {:position "relative"}
    [:.presence
@@ -134,8 +134,8 @@
 (o/defstyled week :div
   {:display               :grid
    :grid-template-columns "repeat(7,1fr)"}
-  [:div.prev :border-b-4 :border-gray-400x {:border-color "var(--surface1)"}]
-  [:div.next :border-t-4 :border-gray-400x {:border-color "var(--surface1)"}]
+  [:div.prev :border-b-4 :border-gray-400x {:border-color "var(--surface3)"}]
+  [:div.next :border-t-4 :border-gray-400x {:border-color "var(--surface3)"}]
   ([w]
    (let [first-dt (ta/calc-first-day-at-week w)
          month-first (t/month first-dt)
@@ -156,17 +156,17 @@
    :grid-template-columns "repeat(7,1fr)"}
   [:div  :border-b :border-r  :flex :items-center :justify-center
    {:color "var(--text2)"
-    :border-color "var(--surface1)"
-    :background-color "var(--surface1)"}])
+    :border-color "var(--surface3)"
+    :background-color "var(--surface3)"}])
                                        
 (o/defstyled calendar :div                
   :w-full :text-white :py-pxx
-  {:background-color "var(--surface1)"}
+  {:background-color "var(--surface3)"}
 
   [:div.week-header :border-b :flex :items-center :justify-center
    {:color "var(--text2)"
-    :border-color "var(--surface1)"
-    :background-color "var(--surface1)"}]
+    :border-color "var(--surface3)"        
+    :background-color "var(--surface3)"}]
   [:div.header :sticky :text-xs  :w-full :top-16 :text-black :z-10 :h-6]
   [:div.weeks :gap-px {:display               :grid
                        
@@ -264,7 +264,7 @@
 
 (o/defstyled front :div
   :space-y-px
-  {:background-color "var(--surface1)"}
+  {:background-color "var(--surface2)"}
   ([r]
    (let [active-user (:uid @(rf/subscribe [::db/user-auth]))
          path ["root"]
@@ -272,11 +272,12 @@
          users @(db/on-value-reaction {:path ["jegkan-users"]})]
      (for [[k {:keys [date description uid]}] data
            :let [date (some-> date (t/instant) (t/date) (str))]]
-       [sc/listitem-content
+       [sc/listitem-content   
         description
         [sc/row [:div date] [:div (username users uid)]]
         {:on-click    #(rf/dispatch [:app/navigate-to [:r.topic {:id k}]])
-         :with-before (when (= uid active-user)
+         :with-before [sc/fronticon [sc/small-icon :circle]]
+         :with-after  (when (= uid active-user)
                         [sc/fronticon
                          {:on-click #(do (readymade/ok-cancel
                                            {:title   "title"

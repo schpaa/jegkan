@@ -72,7 +72,7 @@
         s (rf/subscribe [::rs/state-full :main-fsm])]
     (.setAttribute html "class" (if (= :dark @user-screenmode) "dark" ""))
     (.setAttribute body
-                   "style" "background-color: var(--surface1)"
+                   "style" "background-color: var(--surface3)"
                    "class" "font-sans bg-gray-600 dark:bg-gray-800 ") ;fixme "min-h-screen overflow-x-hidden"
     (forced-scroll-lock (or @menu-open?
                             (and (or (:modal @s)

@@ -1,6 +1,5 @@
 (ns jegkan.sidebar
-  (:require [styles.core :as sc]
-            [reagent.core :as r]
+  (:require [reagent.core :as r]
             [shadow.resource :refer [inline]]
             [db.core :as db]
             [db.auth :as auth]
@@ -9,7 +8,9 @@
             [re-frame.core :as rf]
             [schpaa.modal.readymade :as readymade]
             [schpaa.debug :as l]
-            [lambdaisland.ornament :as o]))
+            [lambdaisland.ornament :as o]
+            [styles.core :as sc]
+            [styles.utils :as su :refer [grid5 grid5-with-gap label]]))
 
 (defn help []
   [sc/markdown (schpaa.markdown/md->html (inline "./intro.md"))])
@@ -87,68 +88,97 @@
   {:background-color "var(--surface2)"})
 
 (o/defstyled footer :footer
-  :sticky :bottom-0    sc/padded
+  :sticky :bottom-0 sc/padded
   {:background-color "var(--surface1)"})
 
 (o/defstyled small-grid :div
-   :grid :gap-1 {:grid-template-columns "repeat(auto-fill,minmax(4rem,1fr))"})
-
-(o/defstyled grid5 :div
-  {:width "100%"
-   :display :grid
-   :grid-gap "8px"
-   :grid-template-columns "repeat(5,minmax(min-content,1fr))"})
+  :grid :gap-1 {:grid-template-columns "repeat(auto-fill,minmax(4rem,1fr))"})
 
 
-(o/defstyled textfield :input
-  :h-full :px-2
-  {:border-radius "var(--radius-1)"
-   :box-shadow "var(--inner-shadow-1)"})
-
-(o/defstyled label :label
-  {:font-size "var(--font-size-0)"
-   :color "var(--text2)"})
+(o/defstyled textfield :div
+  [:input {:outline :none
+           :font-size "var(--font-size-2)"
+           :color   "var(--text1)"}]
+  [:div.with-label :flex :flex-col :justify-between :h-full :w-full :p-2 :bg-white
+   {:border-radius "var(--radius-1)"
+    :box-shadow    "var(--inner-shadow-1)"}
+   #_[:input {:outline :none
+              :color   "var(--text1)"}]]
+  [:div.no-label :flex :flex-col :justify-center :h-full :w-full :p-2 :bg-white
+   {:border-radius "var(--radius-1)"
+    :box-shadow    "var(--inner-shadow-1)"}
+   #_[:input {:outline :none
+              :color   "var(--brand)"}]]
+  ([{:keys [id value on-change label]}]
+   (if label
+     [:div.with-label
+      [su/label {:style {:text-align :right}
+                 :for   id} label]
+      [:input {:id id
+               :placeholder "placeholder"
+               :type      :text
+               :value     value
+               :on-change on-change}]]
+     [:div.no-label
+      [:input {:type      :text
+               :value     value
+               :on-change on-change}]])))
 
 (defn navigation []
   [:<>
-   [header              
-    [sc/row-eq
-     [sc/buttonsquare  [sc/small-icon :clock]]
-     [sc/buttonsquare  [sc/small-icon :plus]]
-     [sc/button-cta "CTA"]]
+   [sc/padded
+    [grid5 {:style {:grid-gap "8px"}}
+     [sc/buttonsquare [sc/small-icon :clock]]
+     [sc/buttonsquare [sc/small-icon :plus]]
+     [sc/button-cta {:style {:grid-column "span 3"}} "CTA"]]
 
-    [grid5
-     [sc/buttonsquare  [sc/small-icon :clock]]
-     [sc/buttonsquare  [sc/small-icon :clock]]
+    [grid5 {:style {:grid-gap "8px"}}
+     [sc/buttonsquare [sc/small-icon :clock]]
+     [sc/buttonsquare [sc/small-icon :clock]]
      [sc/button {:style {:grid-column "span 2"}} [sc/small-icon :plus]]
-     [sc/buttonsquare  [sc/small-icon :plus]]]
+     [sc/buttonsquare [sc/small-icon :plus]]]
 
     (r/with-let [v (r/atom "value")]
-      [grid5
-       [label {:style {:grid-column "span 5"}} "Label on top"]
-       [textfield {:style     {;:min-height "4rem"
+      [grid5 {:style {:row-gap    "4px"
+                      :column-gap "8px"}}
+       #_[label {:for   "some1"
+                 :style {:grid-column "span 5"}} "Label on top"]
+       [textfield {:id        "some1"
+                   :style     {;:min-height "4rem"
                                :grid-column "span 4"}
-                   :label     "label"
+                   :label     "label inside the field"
                    :on-change #(reset! v (-> % .-target .-value))
                    :value     @v}]
        [sc/buttonsquare {:style {:grid-column "span 1"}} [sc/small-icon :three-vertical-dots]]
        #_[sc/button [sc/small-icon :plus]]])
 
+    (r/with-let [v (r/atom "value")]
+      [grid5-with-gap {:style {:row-gap "4px"}}
+       [:div]
+       [label {:style {:grid-column "2/-1"}} "Label on top"]
+       [sc/buttonsquare {:style {:grid-column "span 1"}} [sc/small-icon :three-vertical-dots]]
+       [textfield {:style     {;:min-height "4rem"
+                               :grid-column "2/-1"}
+                   
+                   :on-change #(reset! v (-> % .-target .-value))
+                   :value     @v}]
+       #_[sc/button [sc/small-icon :plus]]])
 
-    [grid5
-     [sc/buttonsquare  [sc/small-icon :plus]]
-     [sc/buttonsquare  [sc/small-icon :plus]]
-     [sc/buttonsquare  [sc/small-icon :plus]]
-     [sc/button {:style {:grid-column "4 / -1"
-                         :background-color "var(--surface1)"}} [sc/small-icon :plus]]]
-    
-    [:div {:style {:width "100%"
-                   :display :grid
-                   :grid-gap "8px"
-                   :grid-template-columns "repeat(5,minmax(min-content,1fr))"}}
-     [sc/buttonsquare  [sc/small-icon :plus]]
-     [sc/buttonsquare  [sc/small-icon :plus]]
-     [sc/button-danger {:style {:padding "var(--size-1)"
+
+    [grid5-with-gap
+     [sc/buttonsquare [sc/small-icon :plus]]
+     ;[sc/buttonsquare  [sc/small-icon :plus]]
+     ;[sc/buttonsquare  [sc/small-icon :plus]]
+     [sc/button {:style {:grid-column      "4 / -1"
+                         :background-color "var(--brand)"}} [sc/small-icon :question]]]
+
+    [grid5-with-gap {:style {:width                 "100%"
+                             :display               :grid
+                             :grid-gap              "8px"
+                             :grid-template-columns "repeat(5,minmax(min-content,1fr))"}}
+     [sc/buttonsquare [sc/small-icon :plus]]
+     [sc/buttonsquare [sc/small-icon :plus]]
+     [sc/button-danger {:style {:padding     "var(--size-1)"
                                 :grid-column "3 / -1"}} [sc/small-icon :plus]]]]
 
 
@@ -181,7 +211,7 @@
          {:disabled false
           :style    {:flex "1 1 0px"}}
          [sc/small-icon :square]]]]]
-   [sc/padded-red [contents (for [e (range 4)]
+   [sc/padded-red [contents (for [e (range 3)]
                               [sc/listitem-content "Top" "Bottom" {:with-before [sc/fronticon {:on-click #(do
                                                                                                             ;(three-dot-click k)
                                                                                                             (.stopPropagation %))}
