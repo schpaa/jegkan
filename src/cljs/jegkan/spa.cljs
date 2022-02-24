@@ -265,7 +265,7 @@
 
 (defn front []
   [:div.m-16
-   [:div.-debugx.fixed.relative.inset-y-16.h-64.bottom-0.top-0 {:style {:xz-index 1000}}
+   [:div.-debugx.fixed.relative.inset-y-16.inset-0.h-96.bottom-0.top-0
     #_[:div.border-black.border-2.relativex.mt-32.ml-32.bg-gray-400
        {:style {:width "100px" :height "100px"}}
        [:div.relative.absolute.top-12.left-2
@@ -273,12 +273,21 @@
         [:div.absolute.top-12.left-8.xright-10.w-32.h-32.bg-blue-300 "Y"]]]
 
     [:div.absolute.bottom-0.right-0
-     {:style {:z-index 600}}
+     {:style {:z-index 400}}
      [sco/menu-example]]
 
-    [:div.absolute.top-0.left-32
+    [:div.absolute.top-0.left-0
      {:style {:z-index 599}}
      [sco/combobox-example]]
+
+    [:div.absolute.bottom-0.left-0 
+     {:style {:z-index 599}}
+     [sco/popover-example]]
+
+    [:div.absolute.top-0.right-0
+     [sc/col
+      [sco/modal-example]
+      [sco/modal-example-2]]]
     
     #_[:div.absolute.top-16.left-32
        ;{:z-index 30000}

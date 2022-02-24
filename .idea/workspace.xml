@@ -5,23 +5,10 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="be89c0ad-2110-4096-ba65-d55c6440e833" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/.idea/libraries/Deps__com_github_mainej_headlessui_reagent_1_5_0_47.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/lib/styles/src/styles/components.cljs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/deps.edn" beforeDir="false" afterPath="$PROJECT_DIR$/deps.edn" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/jegkan.iml" beforeDir="false" afterPath="$PROJECT_DIR$/jegkan.iml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/db/db.iml" beforeDir="false" afterPath="$PROJECT_DIR$/lib/db/db.iml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/editor/editor.iml" beforeDir="false" afterPath="$PROJECT_DIR$/lib/editor/editor.iml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/schpaa/schpaa.iml" beforeDir="false" afterPath="$PROJECT_DIR$/lib/schpaa/schpaa.iml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/styles/deps.edn" beforeDir="false" afterPath="$PROJECT_DIR$/lib/styles/deps.edn" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/styles/src/styles/components.cljs" beforeDir="false" afterPath="$PROJECT_DIR$/lib/styles/src/styles/components.cljs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/lib/styles/src/styles/core.cljs" beforeDir="false" afterPath="$PROJECT_DIR$/lib/styles/src/styles/core.cljs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/styles/styles.iml" beforeDir="false" afterPath="$PROJECT_DIR$/lib/styles/styles.iml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/whatever/whatever.iml" beforeDir="false" afterPath="$PROJECT_DIR$/lib/whatever/whatever.iml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/package-lock.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/package.json" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/public/jegkan/css/output.css" beforeDir="false" afterPath="$PROJECT_DIR$/public/jegkan/css/output.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/jegkan/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/public/jegkan/index.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/cljs/jegkan/sidebar.cljs" beforeDir="false" afterPath="$PROJECT_DIR$/src/cljs/jegkan/sidebar.cljs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/cljs/jegkan/spa.cljs" beforeDir="false" afterPath="$PROJECT_DIR$/src/cljs/jegkan/spa.cljs" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -169,7 +156,7 @@
       <recent name="$PROJECT_DIR$/src/clj" />
     </key>
   </component>
-  <component name="ReplState" timestamp="1645718689783">{:repl-history {:ide [], :local [], :remote [{:command &quot;(shadow/quit)&quot;, :offset 13, :ns &quot;schpaa.components.simple-header&quot;} {:command &quot;(lambdaisland.ornament/defined-styles)&quot;, :offset 38, :ns &quot;shadow.user&quot;} {:command &quot;(css [:at-font-face {:font-family           \&quot;\\\&quot;Inter var experimental, sans-serif\\\&quot;\&quot;\n                     :font-weight           \&quot;100 900\&quot;\n                     :font-display          :swap\n                     :font-style            \&quot;oblique 0deg 10deg\&quot;\n                     :font-feature-settings \&quot;\\\&quot;salt\\\&quot; 1, \\\&quot;zero\\\&quot; 1\&quot;\n                     :src                   \&quot;url(\\\&quot;/fonts/Inter.var.woff2?v=3.19\\\&quot;) format(\\\&quot;woff2\\\&quot;);\&quot;}])&quot;, :offset 429, :ns &quot;cljs.user&quot;} {:command &quot;(shadow/repl)&quot;, :offset 13, :ns &quot;jegkan.spa&quot;} {:command &quot;re-frame.db/app-db&quot;, :offset 18, :ns &quot;cljs.user&quot;} {:command &quot;@re-frame.db/app-db&quot;, :offset 19, :ns &quot;cljs.user&quot;} {:command &quot;(shadow/repl :jegkan)e&quot;, :offset 22, :ns &quot;my.hooks&quot;} {:command &quot;(shadow)&quot;, :offset 7} {:command &quot;(str/include? \&quot;a\&quot; \&quot;arne\&quot;)&quot;, :offset 25, :ns &quot;cljs.user&quot;} {:command &quot;(cljs.string/include? \&quot;a\&quot; \&quot;arne\&quot;)&quot;, :offset 33, :ns &quot;cljs.user&quot;} {:command &quot;(clojure.string/includes? \&quot;S\&quot; \&quot;:\&quot;)&quot;, :offset 34, :ns &quot;cljs.user&quot;} {:command &quot;(clojure.string/includes? \&quot;S\&quot; \&quot;s\&quot;)&quot;, :offset 34, :ns &quot;cljs.user&quot;} {:command &quot;(clojure.string/includes? \&quot;s\&quot; \&quot;s\&quot;)&quot;, :offset 34, :ns &quot;cljs.user&quot;} {:command &quot;(clojure.string/includes? \&quot;s\&quot; \&quot;start\&quot;)&quot;, :offset 38, :ns &quot;cljs.user&quot;} {:command &quot;(clojure.string/includes? \&quot;start\&quot; \&quot;s\&quot;)&quot;, :offset 38, :ns &quot;cljs.user&quot;} {:command &quot;:repl/quit&quot;, :offset 10, :ns &quot;cljs.user&quot;} {:command &quot;(shadow/repl :jegkan)&quot;, :offset 21, :ns &quot;my.hooks&quot;}]}}</component>
+  <component name="ReplState" timestamp="1645739457204">{:repl-history {:ide [], :local [], :remote [{:command &quot;(shadow/quit)&quot;, :offset 13, :ns &quot;schpaa.components.simple-header&quot;} {:command &quot;(lambdaisland.ornament/defined-styles)&quot;, :offset 38, :ns &quot;shadow.user&quot;} {:command &quot;(css [:at-font-face {:font-family           \&quot;\\\&quot;Inter var experimental, sans-serif\\\&quot;\&quot;\n                     :font-weight           \&quot;100 900\&quot;\n                     :font-display          :swap\n                     :font-style            \&quot;oblique 0deg 10deg\&quot;\n                     :font-feature-settings \&quot;\\\&quot;salt\\\&quot; 1, \\\&quot;zero\\\&quot; 1\&quot;\n                     :src                   \&quot;url(\\\&quot;/fonts/Inter.var.woff2?v=3.19\\\&quot;) format(\\\&quot;woff2\\\&quot;);\&quot;}])&quot;, :offset 429, :ns &quot;cljs.user&quot;} {:command &quot;(shadow/repl)&quot;, :offset 13, :ns &quot;jegkan.spa&quot;} {:command &quot;re-frame.db/app-db&quot;, :offset 18, :ns &quot;cljs.user&quot;} {:command &quot;@re-frame.db/app-db&quot;, :offset 19, :ns &quot;cljs.user&quot;} {:command &quot;(shadow/repl :jegkan)e&quot;, :offset 22, :ns &quot;my.hooks&quot;} {:command &quot;(shadow)&quot;, :offset 7} {:command &quot;(str/include? \&quot;a\&quot; \&quot;arne\&quot;)&quot;, :offset 25, :ns &quot;cljs.user&quot;} {:command &quot;(cljs.string/include? \&quot;a\&quot; \&quot;arne\&quot;)&quot;, :offset 33, :ns &quot;cljs.user&quot;} {:command &quot;(clojure.string/includes? \&quot;S\&quot; \&quot;:\&quot;)&quot;, :offset 34, :ns &quot;cljs.user&quot;} {:command &quot;(clojure.string/includes? \&quot;S\&quot; \&quot;s\&quot;)&quot;, :offset 34, :ns &quot;cljs.user&quot;} {:command &quot;(clojure.string/includes? \&quot;s\&quot; \&quot;s\&quot;)&quot;, :offset 34, :ns &quot;cljs.user&quot;} {:command &quot;(clojure.string/includes? \&quot;s\&quot; \&quot;start\&quot;)&quot;, :offset 38, :ns &quot;cljs.user&quot;} {:command &quot;(clojure.string/includes? \&quot;start\&quot; \&quot;s\&quot;)&quot;, :offset 38, :ns &quot;cljs.user&quot;} {:command &quot;:repl/quit&quot;, :offset 10, :ns &quot;cljs.user&quot;} {:command &quot;(shadow/repl :jegkan)&quot;, :offset 21, :ns &quot;my.hooks&quot;}]}}</component>
   <component name="RunManager">
     <configuration default="true" type="Babashka" factoryName="BabashkaLocalRepl" activateToolWindowBeforeRun="false">
       <setting name="displayName" value="" />
@@ -380,7 +367,13 @@
       <option name="presentableId" value="LOCAL−00025" />
       <updated>1645658283476</updated>
     </task>
-    <option name="localTasksCounter" value="26" />
+    <task id="LOCAL−00026" summary="painful">
+      <created>1645718803342</created>
+      <option name="number" value="LOCAL−00026" />
+      <option name="presentableId" value="LOCAL−00026" />
+      <updated>1645718803345</updated>
+    </task>
+    <option name="localTasksCounter" value="27" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -416,6 +409,7 @@
     <MESSAGE value="basis" />
     <MESSAGE value="preparations for headlessui" />
     <MESSAGE value="pt2" />
-    <option name="LAST_COMMIT_MESSAGE" value="pt2" />
+    <MESSAGE value="painful" />
+    <option name="LAST_COMMIT_MESSAGE" value="painful" />
   </component>
 </project>
