@@ -16,7 +16,8 @@
     [re-frame.core :as rf]
     [schpaa.icon :as icon]
     [times.api :as ta]
-    [schpaa.modal.readymade :as readymade]))
+    [schpaa.modal.readymade :as readymade]
+    [styles.components :as sco]))
 
 (goog-define versionz "!")
 (goog-define dummy "!")
@@ -262,7 +263,28 @@
         u (get users (keyword e))]
     (cond (:anonymous u) (:alias u "?") :else (:display-name u "?"))))
 
-(o/defstyled front :div
+(defn front []
+  [:div.m-16
+   [:div.-debugx.fixed.relative.inset-y-16.h-64.bottom-0.top-0 {:style {:xz-index 1000}}
+    #_[:div.border-black.border-2.relativex.mt-32.ml-32.bg-gray-400
+       {:style {:width "100px" :height "100px"}}
+       [:div.relative.absolute.top-12.left-2
+        [:div.h-12.bg-red-500.w-40 "A"]
+        [:div.absolute.top-12.left-8.xright-10.w-32.h-32.bg-blue-300 "Y"]]]
+
+    [:div.absolute.bottom-0.right-0
+     {:style {:z-index 600}}
+     [sco/menu-example]]
+
+    [:div.absolute.top-0.left-32
+     {:style {:z-index 599}}
+     [sco/combobox-example]]
+    
+    #_[:div.absolute.top-16.left-32
+       ;{:z-index 30000}
+       [sco/listbox-example]]]])
+
+(o/defstyled front' :div
   :space-y-px
   {:background-color "var(--surface2)"}
   ([r]

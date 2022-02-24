@@ -11,6 +11,7 @@
            fork/fork                             {:mvn/version "2.4.2"}
            com.lambdaisland/ornament             {:mvn/version "0.4.34"}
            day8/shadow-git-inject                {:mvn/version "0.0.5"}
+           com.github.mainej/headlessui-reagent  {:mvn/version "1.5.0.47"}
 
            styles/styles                         {:local/root    "./lib/styles"
                                                   :deps/manifest :deps}

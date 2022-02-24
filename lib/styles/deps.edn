@@ -5,6 +5,7 @@
          com.lambdaisland/ornament {:mvn/version "0.4.34"}
          reagent/reagent           {:mvn/version "1.1.0"}
          re-frame/re-frame         {:mvn/version "1.2.0"}
+         com.github.mainej/headlessui-reagent  {:mvn/version "1.5.0.47"}
          schpaa/schpaa                         {:local/root "../../lib/schpaa"
                                                 :deps/manifest :deps}}}
          

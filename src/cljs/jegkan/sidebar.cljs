@@ -18,8 +18,10 @@
                                          Combobox Combobox.Option Combobox.Options Combobox.Input
                                          Disclosure Disclosure.Button Disclosure.Panel]]
 
+            [headlessui-reagent.core :as ui]
 
-            [clojure.string :as str]))
+            [clojure.string :as str]
+            [styles.components :as sco]))
 
 (defn help []
   [sc/markdown (schpaa.markdown/md->html (inline "./intro.md"))])
@@ -314,31 +316,46 @@
 
 (def person-by-id (zipmap (map :id people) people))
 
-(o/defstyled disco :div
-  :bg-orange-500
-  ([]
-   [:> Disclosure.Panel {:static true} (fn[e] (r/as-element [:div [l/ppre e] [:div "Stuff"]]))]))
-
 (o/defstyled disco-button :div
   :bg-blue-500 :h-12 :flex :items-center :px-2
   ([props children]
    [:> Disclosure.Button props (fn [e] (r/as-element [:div [l/ppre e]
-                                                      [:div "DIOS"]]))]))
+                                                      [:div "DIOS"]
+                                                      children]))]))
 
 (o/defstyled disclosure :div
   :bg-pink-200 :h-16
   ([props children]
-   [:> Disclosure props children #_(fn[_] (r/as-element [:div
-                                                         children
-                                                         "x"]))]))
+   [:> Disclosure props children #_(fn [_] (r/as-element [:div
+                                                          children
+                                                          "x"]))]))
+
+(o/defstyled disco :div
+  :bg-orange-500
+  ([]
+   [:> Disclosure.Panel {:static true} (fn [e] (r/as-element [:div [l/ppre e] [:div "Stuff"]]))]))
 
 (defn panel-ul [props children]
   (into [:ul.bg-red-500 props] children))
 
+(o/defstyled disclosure-button :div
+  [:& :w-full :px-4 :py-2 :text-sm :font-medium :text-purple-900 :bg-purple-100 :rounded-lg]
+  ([text]
+   [ui/disclosure-button text]))
+
+(o/defstyled disclosure-panel :div
+  [:& :px-4 :pt-4 :pb-2 :text-sm :text-gray-500]
+  ([content]
+   [ui/disclosure-panel content]))
+
+(o/defstyled disclosure-panel' :div
+  [:& :px-4 :pt-4 :pb-2 :text-sm :text-gray-500])
+
+
 (defn navigation []
   (let [selection (rf/subscribe [:tab-selection])]
-    [:div
-     {:style {:position :static}}
+    [:div.h-screen
+     ;{:style {:position :static}}
      ;[l/ppre-x @re-frame.db/app-db]
      [sc/padded
       (into [grid5-with-gap] (map (fn [idx e] [sc/tabsquare {:style    {:border-radius (str "var(--radius-blob-" (inc idx) ")")
@@ -364,50 +381,70 @@
                                    [:> Popover.Button [popover-button "POP" (str e.open)]]
                                    [:> Popover.Overlay (fn [] (r/as-element [overlay]))]
                                    [:> Popover.Panel {:static false} [popover-panel "stuff"]]]))]
-        "1" (r/with-let [query (r/atom "Ar")
-                         !selected (r/atom (last people))]
-              (let [filteredPeople (filter (fn [person] (clojure.string/includes? (:navn person) @query)) people)
-                    selected @!selected]
-                [:div
-                 [l/ppre @!selected]
-                 [:> Combobox {:value     (:id selected)
-                               :on-change #(do
-                                             (tap> %)
-                                             (reset! !selected (get person-by-id %)))}
-                  [:> Combobox.Input {:as            Fragment
-                                      :on-change     (fn [e] (reset! query (-> e .-target .-value)))
-                                      :display-value (fn [id] (:navn (get person-by-id id))) #_(fn [person] (:navn person))}
-                   (fn [e] (r/as-element [:div
-                                          (l/ppre e)
-                                          [nice-textinput {:placeholder "søk"}]]))]
-                  [nice-combo
-                   [:> Combobox.Options {:static true}
-                    (fn [e] (r/as-element
-                              [:div
-                               (l/ppre e)
-                               (for [person filteredPeople]
-                                 ^{:key (str (:id person))}
-                                 [:div
-                                  ;[:div (str e.open) "_" (str (.-activeIndex e))]
-                                  [:> Combobox.Option
-                                   {;:key      (:id person)
-                                    :value    person
-                                    :disabled (:disabled person)}
-                                   (fn [e] (r/as-element [:div
-                                                          (l/ppre e)
-                                                          [nice-listitem
-                                                           {:selected    (.-selected e)
-                                                            :disabled    (.-disabled e)
-                                                            :highlighted (.-active e)}
-                                                           [:div
-                                                            (l/ppr person)
-                                                            (str (:active (js->clj e)) (:selected (js->clj e)))]]]))]])]))]]]]))
-        "2" [:div
-             {:style {:height "200px"}}
-             [disclosure
-              
-              [disco-button]
-              [disco]]]
+        "11" (r/with-let [query (r/atom "Ar")
+                          !selected (r/atom (last people))]
+               (let [filteredPeople (filter (fn [person] (clojure.string/includes? (:navn person) @query)) people)
+                     selected @!selected]
+                 [:div
+                  [l/ppre @!selected]
+                  [:> Combobox {:value     (:id selected)
+                                :on-change #(do
+                                              (tap> %)
+                                              (reset! !selected (get person-by-id %)))}
+                   [:> Combobox.Input {:as            Fragment
+                                       :on-change     (fn [e] (reset! query (-> e .-target .-value)))
+                                       :display-value (fn [id] (:navn (get person-by-id id))) #_(fn [person] (:navn person))}
+                    (fn [e] (r/as-element [:div
+                                           (l/ppre e)
+                                           [nice-textinput {:placeholder "søk"}]]))]
+                   [nice-combo
+                    [:> Combobox.Options {:static true}
+                     (fn [e] (r/as-element
+                               [:div
+                                (l/ppre e)
+                                (for [person filteredPeople]
+                                  ^{:key (str (:id person))}
+                                  [:div
+                                   ;[:div (str e.open) "_" (str (.-activeIndex e))]
+                                   [:> Combobox.Option
+                                    {;:key      (:id person)
+                                     :value    person
+                                     :disabled (:disabled person)}
+                                    (fn [e] (r/as-element [:div
+                                                           (l/ppre e)
+                                                           [nice-listitem
+                                                            {:selected    (.-selected e)
+                                                             :disabled    (.-disabled e)
+                                                             :highlighted (.-active e)}
+                                                            [:div
+                                                             (l/ppr person)
+                                                             (str (:active (js->clj e)) (:selected (js->clj e)))]]]))]])]))]]]]))
+        "22" [:div
+              {:style {:height "200px"}}
+
+              [ui/disclosure
+               ;[disclosure-button "Explain"]
+               ;[disclosure-panel [:p "Some explanation."]]
+               ;[disclosure-button "Explain"]
+               ;[disclosure-panel [:p "Some explanation."]]
+               [disclosure-button "Explain"]
+               [ui/disclosure-panel {:as :ul :class disclosure-panel'}
+                [:li "Note this."]
+                [:li "This too."]]]]
+
+        "2" [sco/listbox-example]
+        "1" [:div.absolute.relative.space-y-4.h-32.border-black.border.overflow-visible
+             {:style {:width "400px" :height "200px"}} ;.relative.-debug.xmin-h-screen.overflow-visible
+             #_[:div.relative.h-12.w-full                     ;.-debug.z-100
+                [:div.absolute.z-200 [sco/menu-example]]]
+             #_[:div.relative
+                [:div.absolute [sco/popover-example]]]
+             #_[:div.w-full.h-12 {:style {:z-index 5000}}
+                [sco/popover-example]]
+             #_[:div "Under"]
+             [sco/menu-example]
+             #_[sco/modal-example]]
+
 
         nil)]]))
 
