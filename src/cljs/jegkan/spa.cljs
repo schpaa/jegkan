@@ -67,14 +67,14 @@
 (def active-user "PeterGASRi0")
 
 (o/defstyled center :div
-  :flex :items-start :p-1 :justify-center   :text-xs {:background-color "var(--surface3)"
-                                                      :color "var(--text2)"})
+  :flex :items-start :p-1 :justify-center :text-xs {:background-color "var(--surface3)"
+                                                    :color            "var(--text2)"})
 
 (o/defstyled day :div
-  :select-none :border-r ;:border-gray-400
+  :select-none :border-r                                    ;:border-gray-400
   {:background-color "var(--surface2)"
    :color            "var(--text1)"
-   :border-color "var(--surface3)"}
+   :border-color     "var(--surface3)"}
   [:div.month-name :uppercase :font-bold]
   [:.day :absolute :top-1 :right-1 :left-1 :text-xs
    [:div :flex :justify-between]]
@@ -85,7 +85,7 @@
                                            :aspect-ratio     "1"}]
    [:.centered :flex :flex-center :justify-center :items-center]]
   [:.weekend {:background [:rgba 255 0 0 0.2]
-              :-color "black"}]
+              :-color     "black"}]
   [:div.dim :border-l-4 :border-gray-400x {:border-color "var(--surface3)"}]
   [:.preferred :text-white {:background-color "var(--green-9)"}]
   [:.container :h-8 {:position "relative"}
@@ -121,7 +121,7 @@
       [:div {:style {:background-color (if freq :red :blue)}}
        [:div.day [:div
                   #_[:div (subs (str (t/day-of-week a)) 0 2)]
-                  [:div.month-name (when (= 1 (t/day-of-month a))(ta/month-name a :length 3))]
+                  [:div.month-name (when (= 1 (t/day-of-month a)) (ta/month-name a :length 3))]
                   [:div (t/day-of-month a)]
                   #_[:div (t/int (t/month a))]]]
        (when (pos? (count @c))
@@ -149,37 +149,37 @@
                           (not= month-this
                                 (t/month (t/>> first-dt (t/new-period (dec e) :days)))))]]
        [:div {:class (if month-change? (if (= month-this month-first) :prev :next))}
-        [day {:dim?   split?
-              :a      (t/>> first-dt (t/new-period e :days))}]]))))
+        [day {:dim? split?
+              :a    (t/>> first-dt (t/new-period e :days))}]]))))
 
 (o/defstyled week-header :div
   {:display               :grid
    :grid-template-columns "repeat(7,1fr)"}
-  [:div  :border-b :border-r  :flex :items-center :justify-center
-   {:color "var(--text2)"
-    :border-color "var(--surface3)"
+  [:div :border-b :border-r :flex :items-center :justify-center
+   {:color            "var(--text2)"
+    :border-color     "var(--surface3)"
     :background-color "var(--surface3)"}])
-                                       
-(o/defstyled calendar :div                
+
+(o/defstyled calendar :div
   :w-full :text-white :py-pxx
   {:background-color "var(--surface3)"}
 
   [:div.week-header :border-b :flex :items-center :justify-center
-   {:color "var(--text2)"
-    :border-color "var(--surface3)"        
+   {:color            "var(--text2)"
+    :border-color     "var(--surface3)"
     :background-color "var(--surface3)"}]
-  [:div.header :sticky :text-xs  :w-full :top-16 :text-black :z-10 :h-6]
+  [:div.header :sticky :text-xs :w-full :top-16 :text-black :z-10 :h-6]
   [:div.weeks :gap-px {:display               :grid
-                       
-                       :grid-template-columns "3rem 1fr" 
+
+                       :grid-template-columns "3rem 1fr"
                        :max-width             "32rem"
                        :margin                :auto}]
-  [:.grid ;:gap-px
+  [:.grid                                                   ;:gap-px
    {:display               :grid
     :grid-template-columns "repeat(7,1fr)"
     :max-width             "32rem"
     :margin                :auto}]
-  ([m]                     
+  ([m]
    (let [{:keys [from to result]} m
          from (t/at (t/new-date 2022 5 12) (t/noon))
          to (t/at (t/new-date 2022 10 12) (t/noon))
@@ -264,7 +264,7 @@
     (cond (:anonymous u) (:alias u "?") :else (:display-name u "?"))))
 
 (defn front []
-  [:div.m-16
+  [:div.m-16.space-y-4
    [:div.-debugx.fixed.relative.inset-y-16.inset-0.h-96.bottom-0.top-0
     #_[:div.border-black.border-2.relativex.mt-32.ml-32.bg-gray-400
        {:style {:width "100px" :height "100px"}}
@@ -280,18 +280,19 @@
      {:style {:z-index 599}}
      [sco/combobox-example]]
 
-    [:div.absolute.bottom-0.left-0 
+    [:div.absolute.bottom-0.left-0
      {:style {:z-index 599}}
      [sco/popover-example]]
 
     [:div.absolute.top-0.right-0
      [sc/col
       [sco/modal-example]
-      [sco/modal-example-2]]]
-    
-    #_[:div.absolute.top-16.left-32
-       ;{:z-index 30000}
-       [sco/listbox-example]]]])
+      [sco/modal-example-2]]]]
+
+   [sco/tabs-example]
+   [sco/tabs-example'']
+   [sco/tabs-example']])
+
 
 (o/defstyled front' :div
   :space-y-px
@@ -303,7 +304,7 @@
          users @(db/on-value-reaction {:path ["jegkan-users"]})]
      (for [[k {:keys [date description uid]}] data
            :let [date (some-> date (t/instant) (t/date) (str))]]
-       [sc/listitem-content   
+       [sc/listitem-content
         description
         [sc/row [:div date] [:div (username users uid)]]
         {:on-click    #(rf/dispatch [:app/navigate-to [:r.topic {:id k}]])
