@@ -363,90 +363,90 @@
                                                              :on-click #(rf/dispatch [:tab-selection e])} e])
                                   (range)
                                   ["A" "B" "C" "1" "2"]))]
-     [sc/padded
-      (case @selection
-        "A" [cloud-content]
-        "B" [:div
-             [:div ">"]
-             [:> Menu
-              [:> Menu.Button (fn [e] (r/as-element [sample-open "more" (str (.-open e))]))]
-              [:> Menu.Items {:xstatic true} (fn [e] (r/as-element [:div "xx"]))
-               [:> Menu.Item {:disabled false} (fn [e] (r/as-element [sample-item "A" (str (.-disabled e)
-                                                                                           (.-active e))]))]
-               [:> Menu.Item {:disabled true} (fn [e] (r/as-element [sample-item "A" (str (.-disabled e)
-                                                                                          (.-active e))]))]
-               [:> Menu.Item (fn [e] (r/as-element [sample-item "A" (str (.-active e))]))]]]]
-        "C" [:> Popover (fn [e] (r/as-element
-                                  [:div ">" (str e.open)
-                                   [:> Popover.Button [popover-button "POP" (str e.open)]]
-                                   [:> Popover.Overlay (fn [] (r/as-element [overlay]))]
-                                   [:> Popover.Panel {:static false} [popover-panel "stuff"]]]))]
-        "11" (r/with-let [query (r/atom "Ar")
-                          !selected (r/atom (last people))]
-               (let [filteredPeople (filter (fn [person] (clojure.string/includes? (:navn person) @query)) people)
-                     selected @!selected]
-                 [:div
-                  [l/ppre @!selected]
-                  [:> Combobox {:value     (:id selected)
-                                :on-change #(do
-                                              (tap> %)
-                                              (reset! !selected (get person-by-id %)))}
-                   [:> Combobox.Input {:as            Fragment
-                                       :on-change     (fn [e] (reset! query (-> e .-target .-value)))
-                                       :display-value (fn [id] (:navn (get person-by-id id))) #_(fn [person] (:navn person))}
-                    (fn [e] (r/as-element [:div
-                                           (l/ppre e)
-                                           [nice-textinput {:placeholder "søk"}]]))]
-                   [nice-combo
-                    [:> Combobox.Options {:static true}
-                     (fn [e] (r/as-element
-                               [:div
-                                (l/ppre e)
-                                (for [person filteredPeople]
-                                  ^{:key (str (:id person))}
-                                  [:div
-                                   ;[:div (str e.open) "_" (str (.-activeIndex e))]
-                                   [:> Combobox.Option
-                                    {;:key      (:id person)
-                                     :value    person
-                                     :disabled (:disabled person)}
-                                    (fn [e] (r/as-element [:div
-                                                           (l/ppre e)
-                                                           [nice-listitem
-                                                            {:selected    (.-selected e)
-                                                             :disabled    (.-disabled e)
-                                                             :highlighted (.-active e)}
-                                                            [:div
-                                                             (l/ppr person)
-                                                             (str (:active (js->clj e)) (:selected (js->clj e)))]]]))]])]))]]]]))
-        "22" [:div
-              {:style {:height "200px"}}
+     #_[sc/padded
+        (case @selection
+          "A" [cloud-content]
+          "B" [:div
+               [:div ">"]
+               [:> Menu
+                [:> Menu.Button (fn [e] (r/as-element [sample-open "more" (str (.-open e))]))]
+                [:> Menu.Items {:xstatic true} (fn [e] (r/as-element [:div "xx"]))
+                 [:> Menu.Item {:disabled false} (fn [e] (r/as-element [sample-item "A" (str (.-disabled e)
+                                                                                             (.-active e))]))]
+                 [:> Menu.Item {:disabled true} (fn [e] (r/as-element [sample-item "A" (str (.-disabled e)
+                                                                                            (.-active e))]))]
+                 [:> Menu.Item (fn [e] (r/as-element [sample-item "A" (str (.-active e))]))]]]]
+          "C" [:> Popover (fn [e] (r/as-element
+                                    [:div ">" (str e.open)
+                                     [:> Popover.Button [popover-button "POP" (str e.open)]]
+                                     [:> Popover.Overlay (fn [] (r/as-element [overlay]))]
+                                     [:> Popover.Panel {:static false} [popover-panel "stuff"]]]))]
+          "11" (r/with-let [query (r/atom "Ar")
+                            !selected (r/atom (last people))]
+                 (let [filteredPeople (filter (fn [person] (clojure.string/includes? (:navn person) @query)) people)
+                       selected @!selected]
+                   [:div
+                    [l/ppre @!selected]
+                    [:> Combobox {:value     (:id selected)
+                                  :on-change #(do
+                                                (tap> %)
+                                                (reset! !selected (get person-by-id %)))}
+                     [:> Combobox.Input {:as            Fragment
+                                         :on-change     (fn [e] (reset! query (-> e .-target .-value)))
+                                         :display-value (fn [id] (:navn (get person-by-id id))) #_(fn [person] (:navn person))}
+                      (fn [e] (r/as-element [:div
+                                             (l/ppre e)
+                                             [nice-textinput {:placeholder "søk"}]]))]
+                     [nice-combo
+                      [:> Combobox.Options {:static true}
+                       (fn [e] (r/as-element
+                                 [:div
+                                  (l/ppre e)
+                                  (for [person filteredPeople]
+                                    ^{:key (str (:id person))}
+                                    [:div
+                                     ;[:div (str e.open) "_" (str (.-activeIndex e))]
+                                     [:> Combobox.Option
+                                      {;:key      (:id person)
+                                       :value    person
+                                       :disabled (:disabled person)}
+                                      (fn [e] (r/as-element [:div
+                                                             (l/ppre e)
+                                                             [nice-listitem
+                                                              {:selected    (.-selected e)
+                                                               :disabled    (.-disabled e)
+                                                               :highlighted (.-active e)}
+                                                              [:div
+                                                               (l/ppr person)
+                                                               (str (:active (js->clj e)) (:selected (js->clj e)))]]]))]])]))]]]]))
+          "22" [:div
+                {:style {:height "200px"}}
 
-              [ui/disclosure
-               ;[disclosure-button "Explain"]
-               ;[disclosure-panel [:p "Some explanation."]]
-               ;[disclosure-button "Explain"]
-               ;[disclosure-panel [:p "Some explanation."]]
-               [disclosure-button "Explain"]
-               [ui/disclosure-panel {:as :ul :class disclosure-panel'}
-                [:li "Note this."]
-                [:li "This too."]]]]
+                [ui/disclosure
+                 ;[disclosure-button "Explain"]
+                 ;[disclosure-panel [:p "Some explanation."]]
+                 ;[disclosure-button "Explain"]
+                 ;[disclosure-panel [:p "Some explanation."]]
+                 [disclosure-button "Explain"]
+                 [ui/disclosure-panel {:as :ul :class disclosure-panel'}
+                  [:li "Note this."]
+                  [:li "This too."]]]]
 
-        "2" [sco/listbox-example]
-        "1" [:div.absolute.relative.space-y-4.h-32.border-black.border.overflow-visible
-             {:style {:width "400px" :height "200px"}} ;.relative.-debug.xmin-h-screen.overflow-visible
-             #_[:div.relative.h-12.w-full                     ;.-debug.z-100
-                [:div.absolute.z-200 [sco/menu-example]]]
-             #_[:div.relative
-                [:div.absolute [sco/popover-example]]]
-             #_[:div.w-full.h-12 {:style {:z-index 5000}}
-                [sco/popover-example]]
-             #_[:div "Under"]
-             [sco/menu-example]
-             #_[sco/modal-example]]
+          "2" [sco/listbox-example]
+          "1" [:div.absolute.relative.space-y-4.h-32.border-black.border.overflow-visible
+               {:style {:width "400px" :height "200px"}} ;.relative.-debug.xmin-h-screen.overflow-visible
+               #_[:div.relative.h-12.w-full                     ;.-debug.z-100
+                  [:div.absolute.z-200 [sco/menu-example]]]
+               #_[:div.relative
+                  [:div.absolute [sco/popover-example]]]
+               #_[:div.w-full.h-12 {:style {:z-index 5000}}
+                  [sco/popover-example]]
+               #_[:div "Under"]
+               [sco/menu-example]
+               #_[sco/modal-example]]
 
 
-        nil)]]))
+          nil)]]))
 
 (def tabs-data
   {:list      {:icon    :compass

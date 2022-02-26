@@ -3,9 +3,12 @@
             [re-statecharts.core :as rs]
             ["body-scroll-lock" :as body-scroll-lock]
             [schpaa.modal :as modal]
+            [kee-frame.error]
             [schpaa.components.screen :as components.screen]
             [nrpk.fsm-helpers :as state :refer [send]]
             [kee-frame.router :refer [make-route-component]]
+            ;[styles.components]
+            [styles.basic]
             [styles.core :as sc]
             [jegkan.sidebar]
             [schpaa.debug :as l]
@@ -69,15 +72,18 @@
         html (aget (.getElementsByTagName js/document "html") 0)
         body (aget (.getElementsByTagName js/document "body") 0)
         menu-open? (rf/subscribe [:app/menu-open?])
-        s (rf/subscribe [::rs/state-full :main-fsm])]
-    (.setAttribute html "class" (if (= :dark @user-screenmode) "dark" ""))
-    (.setAttribute body
-                   "style" "background-color: var(--surface3)"
-                   "class" "font-sans bg-gray-600 dark:bg-gray-800 ") ;fixme "min-h-screen overflow-x-hidden"
-    (forced-scroll-lock (or @menu-open?
-                            (and (or (:modal @s)
-                                     (:modal-forced @s))
-                                 (not (:modal-short-timeout @s)))) "maint")
-    [dispatch-main
-     (when-let [page (get route-table @route-name)]
-       (make-route-component page @route-entry))]))
+        s (rf/subscribe [::rs/state-full :main-fsm])
+        _ (.setAttribute html "class" (if (= :dark @user-screenmode) "dark" ""))
+        _ (.setAttribute body
+                         "style" "background-color: var(--surface3)"
+                         "class" "font-sans bg-gray-600 dark:bg-gray-800 ")]
+    #_(forced-scroll-lock (or @menu-open?
+                              (and (or (:modal @s)
+                                       (:modal-forced @s))
+                                   (not (:modal-short-timeout @s)))) "maint")
+
+    [styles.basic/tabs-example'']
+    ;[:div.text-black "x"]
+    #_[dispatch-main
+       (when-let [page (get route-table @route-name)]
+         (make-route-component page @route-entry))]))

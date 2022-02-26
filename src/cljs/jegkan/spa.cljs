@@ -17,6 +17,7 @@
     [schpaa.icon :as icon]
     [times.api :as ta]
     [schpaa.modal.readymade :as readymade]
+    [styles.menu]
     [styles.components :as sco]))
 
 (goog-define versionz "!")
@@ -274,24 +275,24 @@
 
     [:div.absolute.bottom-0.right-0
      {:style {:z-index 400}}
-     [sco/menu-example]]
+     [styles.menu/menu-example]]
 
-    [:div.absolute.top-0.left-0
-     {:style {:z-index 599}}
-     [sco/combobox-example]]
+    #_[:div.absolute.top-0.left-0
+       {:style {:z-index 599}}
+       [sco/combobox-example]]
 
-    [:div.absolute.bottom-0.left-0
-     {:style {:z-index 599}}
-     [sco/popover-example]]
+    #_[:div.absolute.bottom-0.left-0
+       {:style {:z-index 599}}
+       [sco/popover-example]]
 
-    [:div.absolute.top-0.right-0
-     [sc/col
-      [sco/modal-example]
-      [sco/modal-example-2]]]]
+    #_[:div.absolute.top-0.right-0
+       [sc/col
+        [sco/modal-example]
+        [sco/modal-example-2]]]]])
 
-   [sco/tabs-example]
-   [sco/tabs-example'']
-   [sco/tabs-example']])
+   ;[sco/tabs-example]
+   ;[sco/tabs-example'']
+   ;[sco/tabs-example']])
 
 
 (o/defstyled front' :div
@@ -339,7 +340,8 @@
   (let [active-item (-> r :path-params :id)
         active-item (if (keyword? active-item) (name active-item) active-item)]
     [:<>
-     ;[l/ppre (get @(db/on-value-reaction {:path ["root" active-item]}) :slots)]
+     [l/ppre active-item]
+     [l/ppre (get @(db/on-value-reaction {:path ["root" active-item]}) :slots)]
      (if-let [data @(db/on-value-reaction {:path ["root" active-item]})]
        (let [result (into {} (take 5 (sort-by second > (reduce (fn [a [k v]] (assoc a (name k) (count v))) {} (get data :slots)))))]
          [:div
