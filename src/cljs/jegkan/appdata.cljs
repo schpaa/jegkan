@@ -5,6 +5,8 @@
 
 (def routes
   [["/" {:name :r.forsiden}]
+   ["/baksiden" {:name :r.baksiden}]
+   ["/oppsett" {:name :r.oppsett}]
    ["/topic/:id" {:name :r.topic}]
    ["/not-found" {:name :r.not-found}]])
 

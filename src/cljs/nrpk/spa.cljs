@@ -82,7 +82,7 @@
                                        (:modal-forced @s))
                                    (not (:modal-short-timeout @s)))) "maint")
 
-    [styles.basic/tabs-example'']
+    [styles.basic/tabs-example''']
     ;[:div.text-black "x"]
     #_[dispatch-main
        (when-let [page (get route-table @route-name)]
